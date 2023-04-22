@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+
+
+//from galal
+
 public class oldMovement : MonoBehaviour
 {
     Rigidbody2D rb;
