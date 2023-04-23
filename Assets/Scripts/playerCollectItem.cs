@@ -6,7 +6,7 @@ using TMPro;
 public class playerCollectItem : MonoBehaviour
 {
 
-    private List<string> inventory;
+    public List<string> inventory;
 
     private int coinCount;
     [SerializeField] private TextMeshProUGUI coinText;
