@@ -38,18 +38,19 @@ public class PlayerMovement1 : MonoBehaviour
 
 
 	//Timers (also all fields, could be private and a method returning a bool could be used)
-	public float LastOnGroundTime { get; private set; }
+	public float LastOnGroundTime { get; private set; } // == cayoteTime when on ground (currently 0.2 but can be edited from the inspector)
 	public float LastOnWallTime { get; private set; }
 	public float LastOnWallRightTime { get; private set; }
 	public float LastOnWallLeftTime { get; private set; }
 
 	//Jump
 	[Header("Jumps")]
-	[SerializeField] private int extraJumpValue;
-	private int extraJumps;
+	[SerializeField] private int extraJumps;
 	private float coyoteTimeCounter;
     private bool _isJumpCut;
 	private bool _isJumpFalling;
+	private int _extraJumpsLeft;
+
 
 	//Wall Jump
 	private float _wallJumpStartTime;
@@ -97,7 +98,7 @@ public class PlayerMovement1 : MonoBehaviour
 		SetGravityScale(Data.gravityScale);
 		IsFacingRight = true;
 		normalCameraMovement = cameraFollowPlayer.GetComponent<normalCameraMovement>();
-
+		_extraJumpsLeft = extraJumps;
 	}
 
 	private void Update()
@@ -119,10 +120,10 @@ public class PlayerMovement1 : MonoBehaviour
 		if (_moveInput.x != 0)
 			CheckDirectionToFace(_moveInput.x > 0);
 
-		if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C)  || Input.GetButtonDown("Jump"))
-        {
+		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Jump"))
+		{
 			OnJumpInput();
-        }
+		}
 
 		if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetButtonUp("Jump"))
 		{
@@ -141,18 +142,18 @@ public class PlayerMovement1 : MonoBehaviour
 			//Ground Check
 			if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer) && !IsJumping) //checks if set box overlaps with ground
 			{
-				if(LastOnGroundTime < -0.1f)
-                {
+				if (LastOnGroundTime < -0.1f)
+				{
 					//AnimHandler.justLanded = true;
-                }
+				}
 
 				LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
-            }
+			}
 
 			//Right Wall Check
-			if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight) 
+			if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)
 				|| (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)) && !IsWallJumping)
-			{ 
+			{
 				LastOnWallRightTime = Data.coyoteTime;
 			}
 
@@ -173,7 +174,7 @@ public class PlayerMovement1 : MonoBehaviour
 		{
 			IsJumping = false;
 
-			if(!IsWallJumping)
+			if (!IsWallJumping)
 				_isJumpFalling = true;
 		}
 
@@ -182,11 +183,12 @@ public class PlayerMovement1 : MonoBehaviour
 			IsWallJumping = false;
 		}
 
-		if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
+		if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping || LastOnWallTime == 0.2f)
         {
 			_isJumpCut = false;
+			_extraJumpsLeft = extraJumps;
 
-			if(!IsJumping)
+			if (!IsJumping)
 				_isJumpFalling = false;
 		}
 
@@ -214,6 +216,19 @@ public class PlayerMovement1 : MonoBehaviour
 				_lastWallJumpDir = (LastOnWallRightTime > 0) ? -1 : 1;
 
 				WallJump(_lastWallJumpDir);
+			}
+
+			//DOUBLE JUMP
+			else if (LastPressedJumpTime > 0 && _extraJumpsLeft > 0)
+			{
+				IsJumping = true;
+				IsWallJumping = false;
+				_isJumpCut = false;
+				_isJumpFalling = false;
+
+				_extraJumpsLeft--;
+
+				Jump();
 			}
 		}
 		#endregion
@@ -295,8 +310,6 @@ public class PlayerMovement1 : MonoBehaviour
 
 		//when falling switch to Falling Camera
 		ChangeCameraFalling();
-
-		//extraJump();
 	}
 
     private void FixedUpdate()
@@ -316,8 +329,10 @@ public class PlayerMovement1 : MonoBehaviour
 
 		//Handle Slide
 		if (IsWallSliding)
+        {
 			Slide();
-    }
+		}
+	}
 
     #region INPUT CALLBACKS
 	//Methods which whandle input detected in Update()
@@ -456,48 +471,6 @@ public class PlayerMovement1 : MonoBehaviour
 		#endregion
 	}
 
-	//private void extraJump()
- //   {
-	//	if (LastOnGroundTime == 0.2f)
- //       {
-	//		extraJumps = extraJumpValue;
-	//		coyoteTimeCounter = LastOnGroundTime;
-
-	//	}
-	//	else if (!IsGrounded() && (extraJumps == extraJumpValue - 1 || extraJumps == extraJumpValue))
-	//	{
-	//		coyoteTimeCounter -= Time.deltaTime;
-	//	}
-	//	else
-	//	{
-	//	}
-
-	//	//extraJump True
-	//	//Debug.Log(LastOnGroundTime);
-	//	if (extraJumps > 0 && Input.GetButtonDown("Jump") && LastOnGroundTime < 0f)
-	//	{
-	//		RB.velocity = new Vector2(RB.velocity.x, 50);
- //           //RB.velocity = new Vector2(RB.velocity.x, extraJumpForce);
- //           extraJumps--;
-	//	}
-	//	//extraJump False AND cayoteTime True
-	//	else if (Input.GetButtonDown("Jump") && extraJumps == 0 && coyoteTimeCounter > 0f)
-	//	{
-	//		//RB.velocity = new Vector2(RB.velocity.x, Data.jumpForce);
-	//	}
-
-	//	if (coyoteTimeCounter > 0)
-	//	{
-	//		extraJumps = extraJumpValue;
-	//	}
-
-	//	//let go of Jump Button
-	//	if (Input.GetButtonUp("Jump") && RB.velocity.y > 0)
-	//	{
-	//		coyoteTimeCounter = 0f;
-	//	}
-	//}
-
 	private void WallJump(int dir)
 	{
 		//Ensures we can't call Wall Jump multiple times from one press
@@ -578,7 +551,7 @@ public class PlayerMovement1 : MonoBehaviour
 	}
 	#endregion
 
-	#region OTHER MOVEMENT METHODS
+	#region WALL SLIDING METHOD
 	private void Slide()
 	{
 		//Works the same as the Run but only in the y-axis
@@ -591,11 +564,16 @@ public class PlayerMovement1 : MonoBehaviour
 
 		RB.AddForce(movement * Vector2.up);
 	}
-    #endregion
+	#endregion
 
 
-    #region CHECK METHODS
-    public void CheckDirectionToFace(bool isMovingRight)
+	#region CHECK METHODS
+	private bool IsGrounded()
+	{
+		return Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
+	}
+
+	public void CheckDirectionToFace(bool isMovingRight)
 	{
 		if (isMovingRight != IsFacingRight)
 			Turn();
@@ -639,6 +617,15 @@ public class PlayerMovement1 : MonoBehaviour
 		else
 			return false;
 	}
+
+	//private void CanDoubleJump()
+ //   {
+	//	if (LastOnWallTime > 0)
+ //       {
+
+ //       }
+
+	//}
 	#endregion
 
 
@@ -668,10 +655,5 @@ public class PlayerMovement1 : MonoBehaviour
     }
 
     #endregion
-
-    private bool IsGrounded()
-    {
-        return Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
-    }
 }
 
