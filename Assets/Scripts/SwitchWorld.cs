@@ -8,7 +8,7 @@ public class SwitchWorld : MonoBehaviour
     {
         VECTOR,PIXEL
     }
-    private Mode playerMode = Mode.PIXEL;
+    public Mode playerMode = Mode.PIXEL;
     
     // Start is called before the first frame update
     void Start()

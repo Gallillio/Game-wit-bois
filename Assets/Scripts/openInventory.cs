@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Open_Inventory : MonoBehaviour
+public class openInventory : MonoBehaviour
 {
     public GameObject inventoryPanel;
     public TextMeshProUGUI itemsText;
