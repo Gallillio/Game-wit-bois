@@ -35,10 +35,12 @@ public class openInventory : MonoBehaviour
         if(collectItem.inventory.Count > 0)
             for (int i = 0; i < collectItem.inventory.Count; i++)
             {
-                if(collectItem.inventory[i].Equals("coin"))
+                if(collectItem.inventory[i].Equals("coin") || collectItem.inventory[i].Equals("Money!"))
                     continue;
                 tmp += collectItem.inventory[i] + "\n";
             }
         itemsText.text = tmp;
+        
+        
     }
 }
