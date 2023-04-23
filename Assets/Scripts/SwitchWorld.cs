@@ -19,6 +19,7 @@ public class SwitchWorld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //switch player from current mode to next mode
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
             if (playerMode == Mode.PIXEL)

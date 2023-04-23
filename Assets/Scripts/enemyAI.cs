@@ -13,6 +13,7 @@ public class enemyAI : MonoBehaviour
     }
  
     void Update(){
+        //if the target is vector follow
         if (mode.playerMode == SwitchWorld.Mode.VECTOR)
         {
             //rotate to look at the player
