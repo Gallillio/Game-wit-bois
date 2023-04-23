@@ -541,6 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f1dbf5a65501749a52fb73b159bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: []
   coinText: {fileID: 2012882252}
 --- !u!61 &316576548
 BoxCollider2D:
@@ -3923,12 +3924,12 @@ GameObject:
   - component: {fileID: 880300508}
   - component: {fileID: 880300507}
   m_Layer: 5
-  m_Name: Panel
-  m_TagString: Untagged
+  m_Name: Inventory Panel
+  m_TagString: InventoryPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &880300506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4654,6 +4655,7 @@ GameObject:
   - component: {fileID: 1335077536}
   - component: {fileID: 1335077538}
   - component: {fileID: 1335077539}
+  - component: {fileID: 1335077540}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4790,6 +4792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f1dbf5a65501749a52fb73b159bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: []
   coinText: {fileID: 2012882252}
 --- !u!114 &1335077539
 MonoBehaviour:
@@ -4815,6 +4818,21 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &1335077540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335077532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb8bdc5b3fe43229a81d1a42ffbcbec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPanel: {fileID: 880300505}
+  itemsText: {fileID: 1269832565}
+  collectItem: {fileID: 1335077538}
 --- !u!1 &1413169404
 GameObject:
   m_ObjectHideFlags: 0

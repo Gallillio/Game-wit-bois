@@ -1,28 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Open_Inventory : MonoBehaviour
 {
-    public GameObject panel;
-    public TextMesh items;
-    public GameObject player;
+    public GameObject inventoryPanel;
+    public TextMeshProUGUI itemsText;
+    public playerCollectItem collectItem;
+    
+
+    
+    // Use this for initialization
+    void Start () {
+
+    }
     
     // Update is called once per frame
     void Update()
     {
-        
-        
-        if (!panel.activeSelf && (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Joystick1Button7)))
+        populateItemsText();
+        //shows the inventory panel
+        if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Joystick1Button7)))
         {
-            panel.SetActive(!panel.activeSelf);
-            populateItemsText();
+            inventoryPanel.SetActive(!inventoryPanel.activeSelf);
         }
     }
 
     void populateItemsText()
     {
-        
+        string tmp = "";
+        if(collectItem.inventory.Count > 0)
+            for (int i = 0; i < collectItem.inventory.Count; i++)
+            {
+                if(collectItem.inventory[i].Equals("coin"))
+                    continue;
+                tmp += collectItem.inventory[i] + "\n";
+            }
+        itemsText.text = tmp;
     }
 }
