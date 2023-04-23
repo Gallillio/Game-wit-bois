@@ -406,6 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f1dbf5a65501749a52fb73b159bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: []
   coinText: {fileID: 2012882252}
 --- !u!61 &316576548
 BoxCollider2D:
@@ -4428,6 +4429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f1dbf5a65501749a52fb73b159bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: []
   coinText: {fileID: 2012882252}
 --- !u!114 &1335077539
 MonoBehaviour:
@@ -4449,7 +4451,7 @@ MonoBehaviour:
   _groundCheckSize: {x: 0.49, y: 0.03}
   _frontWallCheckPoint: {fileID: 952976627}
   _backWallCheckPoint: {fileID: 459855848}
-  _wallCheckSize: {x: 0.5, y: 1}
+  _wallCheckSize: {x: 0, y: 0}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
