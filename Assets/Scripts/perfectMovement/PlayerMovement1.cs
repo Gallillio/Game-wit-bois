@@ -648,7 +648,7 @@ public class PlayerMovement1 : MonoBehaviour
         if (LastOnGroundTime < 0)
         {
             LastFallCounter++;
-            Debug.Log(IsJumping);
+            //Debug.Log(IsJumping);
         }
         else
         {
