@@ -11,6 +11,7 @@ public class Open_Inventory : MonoBehaviour
     public playerCollectItem collectItem;
     
 
+    //TODO idea, add buttons to check info about the item, and be able to equip the item
     
     // Use this for initialization
     void Start () {
