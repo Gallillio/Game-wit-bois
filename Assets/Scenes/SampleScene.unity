@@ -4380,7 +4380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335077532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.3, y: 0.1, z: 0}
+  m_LocalPosition: {x: 13.26, y: 4.627968, z: 0}
   m_LocalScale: {x: 1.2935, y: 1.0839, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4444,7 +4444,7 @@ MonoBehaviour:
   Data: {fileID: 11400000, guid: 89438eb14a3a8b24d9f3706c0737a4c5, type: 2}
   cameraManager: {fileID: 140124025}
   cameraFollowPlayer: {fileID: 1837626451}
-  extraJumps: 1
+  extraJumps: 0
   _groundCheckPoint: {fileID: 1123725767}
   _groundCheckSize: {x: 0.49, y: 0.03}
   _frontWallCheckPoint: {fileID: 952976627}

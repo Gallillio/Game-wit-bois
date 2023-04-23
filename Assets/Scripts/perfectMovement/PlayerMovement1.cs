@@ -35,7 +35,7 @@ public class PlayerMovement1 : MonoBehaviour
 	[Header("Camera")]
     [SerializeField] private cameraManager cameraManager;
 	[SerializeField] private GameObject cameraFollowPlayer;
-
+	private int LastFallCounter = 0;
 
 	//Timers (also all fields, could be private and a method returning a bool could be used)
 	public float LastOnGroundTime { get; private set; } // == cayoteTime when on ground (currently 0.2 but can be edited from the inspector)
@@ -50,7 +50,6 @@ public class PlayerMovement1 : MonoBehaviour
     private bool _isJumpCut;
 	private bool _isJumpFalling;
 	private int _extraJumpsLeft;
-
 
 	//Wall Jump
 	private float _wallJumpStartTime;
@@ -88,7 +87,7 @@ public class PlayerMovement1 : MonoBehaviour
 	[SerializeField] private LayerMask _groundLayer;
 	#endregion
 
-    private void Awake()
+	private void Awake()
 	{
 		RB = GetComponent<Rigidbody2D>();
 	}
@@ -99,10 +98,15 @@ public class PlayerMovement1 : MonoBehaviour
 		IsFacingRight = true;
 		normalCameraMovement = cameraFollowPlayer.GetComponent<normalCameraMovement>();
 		_extraJumpsLeft = extraJumps;
+
+
 	}
 
 	private void Update()
 	{
+		//Debug.Log(_isJumpFalling);
+		//Debug.Log(IsGrounded());
+
 		#region TIMERS
 		LastOnGroundTime -= Time.deltaTime;
 		LastOnWallTime -= Time.deltaTime;
@@ -149,23 +153,24 @@ public class PlayerMovement1 : MonoBehaviour
 
 				LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
 			}
+            //Right Wall Check
 
-			//Right Wall Check
-			if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)
-				|| (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)) && !IsWallJumping)
-			{
-				LastOnWallRightTime = Data.coyoteTime;
-			}
+            if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)
+                || (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)) && !IsWallJumping)
+            {
+                LastOnWallRightTime = Data.coyoteTime;
+            }
 
-			//Left Wall Check
-			if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)
-				|| (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)) && !IsWallJumping)
-			{
-				LastOnWallLeftTime = Data.coyoteTime;
-			}
+            //Left Wall Check
+            if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)
+                || (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)) && !IsWallJumping)
+            {
+                LastOnWallLeftTime = Data.coyoteTime;
+            }
 
-			//Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
-			LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
+
+            //Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
+            LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
 		}
 		#endregion
 
@@ -208,17 +213,17 @@ public class PlayerMovement1 : MonoBehaviour
 			else if (CanWallJump() && LastPressedJumpTime > 0)
 			{
 				IsWallJumping = true;
-				IsJumping = false;
-				_isJumpCut = false;
-				_isJumpFalling = false;
+                IsJumping = false;
+                _isJumpCut = false;
+                _isJumpFalling = false;
 
-				_wallJumpStartTime = Time.time;
-				_lastWallJumpDir = (LastOnWallRightTime > 0) ? -1 : 1;
+                _wallJumpStartTime = Time.time;
+                _lastWallJumpDir = (LastOnWallRightTime > 0) ? -1 : 1;
 
-				WallJump(_lastWallJumpDir);
-			}
+                WallJump(_lastWallJumpDir);
+            }
 
-			//DOUBLE JUMP
+			//EXTRA JUMP
 			else if (LastPressedJumpTime > 0 && _extraJumpsLeft > 0)
 			{
 				IsJumping = true;
@@ -586,8 +591,14 @@ public class PlayerMovement1 : MonoBehaviour
 
 	private bool CanWallJump()
     {
-		return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
-			 (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
+        //Debug.Log("Right: " + LastOnWallRightTime);
+        //Debug.Log("Left: " + LastOnWallLeftTime);
+
+		return LastPressedJumpTime > 0 && LastOnWallTime > 0;
+
+		//return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
+		//	 (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
+
 	}
 
 	private bool CanJumpCut()
@@ -617,41 +628,47 @@ public class PlayerMovement1 : MonoBehaviour
 		else
 			return false;
 	}
-
-	//private void CanDoubleJump()
- //   {
-	//	if (LastOnWallTime > 0)
- //       {
-
- //       }
-
-	//}
-	#endregion
+    #endregion
 
 
-	#region CHANGE TO CAMERA FALLING
+    #region CHANGE TO CAMERA FALLING
 
-	private void ChangeCameraFalling()
+    private void ChangeCameraFalling()
 	{
-        //float fallingVelocity = RB.velocity.y - 10f;
-		//Debug.Log(LastOnGroundTime);
 		//LastOnGroundTime
 		//LastOnWallTime
 		//LastOnWallLeftTime
 		//LastOnWallRightTime
-        //if (!IsGrounded() && !IsWallSliding)
-        //{
-        //    //Debug.Log("Fall Cam Activated");
-        //    cameraManager.SwitchCamera(cameraManager.fallingCamera);
-        //}
-        //else if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding)
-        //{
-        //    //Debug.Log("Movement Cam Activated");
-        //    cameraManager.SwitchCamera(cameraManager.movementCamera);
-        //}
-        //else
-        //{
-        //}
+
+		//Debug.Log(LastOnGroundTime);
+
+		//float last = Mathf.Max(LastOnGroundTime, LastOnWallTime); 
+		//Debug.Log(last);
+
+        if (LastOnGroundTime < 0)
+        {
+            LastFallCounter++;
+            Debug.Log(IsJumping);
+        }
+        else
+        {
+            LastFallCounter = 0;
+        }
+
+
+        if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping)
+        {
+            //Debug.Log("Movement Cam Activated");
+            cameraManager.SwitchCamera(cameraManager.movementCamera);
+        }
+        else if (LastFallCounter >= 250)
+        {
+            //Debug.Log("Fall Cam Activated");
+            cameraManager.SwitchCamera(cameraManager.fallingCamera);
+        }
+        else
+        {
+        }
     }
 
     #endregion
