@@ -28,6 +28,7 @@ public class PlayerMovement1 : MonoBehaviour
 	[SerializeField] private cameraManager cameraManager;
 	[SerializeField] private GameObject cameraFollowPlayer;
 	private int LastFallCounter = 0;
+	private int LookUpButtonHeldTime = 0;
 
 	//Timers (also all fields, could be private and a method returning a bool could be used)
 	public float LastOnGroundTime { get; private set; } // == coyoteTime when on ground (currently 0.2 but can be edited from the inspector)
@@ -167,7 +168,7 @@ public class PlayerMovement1 : MonoBehaviour
 		if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
 		{
 			_isJumpCut = false;
-			_extraJumpsLeft = 0;
+			_extraJumpsLeft = extraJumps;
 
 			if (!IsJumping)
 				_isJumpFalling = false;
@@ -290,6 +291,7 @@ public class PlayerMovement1 : MonoBehaviour
 
 		//when falling switch to Falling Camera
 		ChangeCameraFalling();
+		ChangeCameraViewUp();
 	}
 
 	private void FixedUpdate()
@@ -595,24 +597,13 @@ public class PlayerMovement1 : MonoBehaviour
 	}
 	#endregion
 
-	#region CHANGE TO CAMERA FALLING
-
+	#region CHANGE TO DIFFERENT CAMERAS
+	//when falling
 	private void ChangeCameraFalling()
 	{
-		//LastOnGroundTime
-		//LastOnWallTime
-		//LastOnWallLeftTime
-		//LastOnWallRightTime
-
-		//Debug.Log(LastOnGroundTime);
-
-		//float last = Mathf.Max(LastOnGroundTime, LastOnWallTime); 
-		//Debug.Log(last);
-
 		if (LastOnGroundTime < 0)
 		{
 			LastFallCounter++;
-			//Debug.Log(IsJumping);
 		}
 		else
 		{
@@ -624,15 +615,36 @@ public class PlayerMovement1 : MonoBehaviour
 			//Debug.Log("Movement Cam Activated");
 			cameraManager.SwitchCamera(cameraManager.movementCamera);
 		}
-		else if (LastFallCounter >= 250)
+		else if (LastFallCounter >= 200)
 		{
 			//Debug.Log("Fall Cam Activated");
 			cameraManager.SwitchCamera(cameraManager.fallingCamera);
 		}
 		else
 		{
+			cameraManager.SwitchCamera(cameraManager.movementCamera);
 		}
 	}
+
+	
+	private void ChangeCameraViewUp()
+    {
+		//time the button is held
+		if (Input.GetKey(KeyCode.W))
+		{
+			LookUpButtonHeldTime++;
+		}
+		else
+		{
+			LookUpButtonHeldTime = 0;
+		}
+
+		if (LookUpButtonHeldTime > 100 && _moveInput.x == 0)
+        {
+            cameraManager.SwitchCamera(cameraManager.ViewUpCamera);
+        }
+
+    }
 
 	#endregion
 }
