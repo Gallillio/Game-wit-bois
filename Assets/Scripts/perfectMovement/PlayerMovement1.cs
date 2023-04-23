@@ -1,11 +1,3 @@
-/*
-	Created by @DawnosaurDev at youtube.com/c/DawnosaurStudios
-	Thanks so much for checking this out and I hope you find it helpful! 
-	If you have any further queries, questions or feedback feel free to reach out on my twitter or leave a comment on youtube :D
-
-	Feel free to use this in your own games, and I'd love to see anything you make!
- */
-
 using System.Collections;
 using UnityEngine;
 
@@ -24,8 +16,8 @@ public class PlayerMovement1 : MonoBehaviour
 	//Variables control the various actions the player can perform at any time.
 	//These are fields which can are public allowing for other sctipts to read them
 	//but can only be privately written to.
-	public bool IsFacingRight { get; private set; }
 	Vector3 rotator;
+	public bool IsFacingRight { get; private set; }
 	public bool IsJumping { get; private set; }
 	public bool IsWallJumping { get; private set; }
 	public bool IsDashing { get; private set; }
@@ -38,7 +30,7 @@ public class PlayerMovement1 : MonoBehaviour
 	private int LastFallCounter = 0;
 
 	//Timers (also all fields, could be private and a method returning a bool could be used)
-	public float LastOnGroundTime { get; private set; } // == cayoteTime when on ground (currently 0.2 but can be edited from the inspector)
+	public float LastOnGroundTime { get; private set; } // == coyoteTime when on ground (currently 0.2 but can be edited from the inspector)
 	public float LastOnWallTime { get; private set; }
 	public float LastOnWallRightTime { get; private set; }
 	public float LastOnWallLeftTime { get; private set; }
@@ -46,7 +38,6 @@ public class PlayerMovement1 : MonoBehaviour
 	//Jump
 	[Header("Jumps")]
 	[SerializeField] private int extraJumps;
-	private float coyoteTimeCounter;
     private bool _isJumpCut;
 	private bool _isJumpFalling;
 	private int _extraJumpsLeft;
@@ -79,7 +70,7 @@ public class PlayerMovement1 : MonoBehaviour
 	[Space(5)]
 	[SerializeField] private Transform _frontWallCheckPoint;
 	[SerializeField] private Transform _backWallCheckPoint;
-	[SerializeField] private Vector2 _wallCheckSize = new Vector2(0.5f, 1f);
+	[SerializeField] private Vector2 _wallCheckSize;
     #endregion
 
     #region LAYERS & TAGS
@@ -98,14 +89,11 @@ public class PlayerMovement1 : MonoBehaviour
 		IsFacingRight = true;
 		normalCameraMovement = cameraFollowPlayer.GetComponent<normalCameraMovement>();
 		_extraJumpsLeft = extraJumps;
-
-
 	}
 
 	private void Update()
 	{
-		//Debug.Log(_isJumpFalling);
-		//Debug.Log(IsGrounded());
+
 
 		#region TIMERS
 		LastOnGroundTime -= Time.deltaTime;
@@ -146,32 +134,23 @@ public class PlayerMovement1 : MonoBehaviour
 			//Ground Check
 			if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer) && !IsJumping) //checks if set box overlaps with ground
 			{
-				if (LastOnGroundTime < -0.1f)
-				{
-					//AnimHandler.justLanded = true;
-				}
-
 				LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
 			}
-            //Right Wall Check
 
-            if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)
-                || (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)) && !IsWallJumping)
-            {
-                LastOnWallRightTime = Data.coyoteTime;
-            }
+			////Right Wall Check
+			if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)
+					|| (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)) && !IsWallJumping)
+				LastOnWallRightTime = Data.coyoteTime;
 
-            //Left Wall Check
-            if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)
-                || (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)) && !IsWallJumping)
-            {
-                LastOnWallLeftTime = Data.coyoteTime;
-            }
+			//Left Wall Check
+			if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)
+				|| (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)) && !IsWallJumping)
+				LastOnWallLeftTime = Data.coyoteTime;
 
 
-            //Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
-            LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
-		}
+			//Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
+			LastOnWallTime = Mathf.Max(LastOnWallLeftTime, LastOnWallRightTime);
+        }
 		#endregion
 
 		#region JUMP CHECKS
@@ -188,7 +167,7 @@ public class PlayerMovement1 : MonoBehaviour
 			IsWallJumping = false;
 		}
 
-		if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping || LastOnWallTime == 0.2f)
+		if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
         {
 			_isJumpCut = false;
 			_extraJumpsLeft = extraJumps;
@@ -200,7 +179,7 @@ public class PlayerMovement1 : MonoBehaviour
 		if (!IsDashing)
 		{
 			//Jump
-			if (CanJump() && LastPressedJumpTime > 0)
+			if (CanJump() && LastPressedJumpTime > 0 && IsGrounded())
 			{
 				IsJumping = true;
 				IsWallJumping = false;
@@ -594,13 +573,12 @@ public class PlayerMovement1 : MonoBehaviour
         //Debug.Log("Right: " + LastOnWallRightTime);
         //Debug.Log("Left: " + LastOnWallLeftTime);
 
-		return LastPressedJumpTime > 0 && LastOnWallTime > 0;
+        return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
+             (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
 
-		//return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
-		//	 (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
+    }
 
-	}
-
+	
 	private bool CanJumpCut()
     {
 		return IsJumping && RB.velocity.y > 0;
@@ -656,7 +634,7 @@ public class PlayerMovement1 : MonoBehaviour
         }
 
 
-        if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping)
+        if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping || IsWallJumping)
         {
             //Debug.Log("Movement Cam Activated");
             cameraManager.SwitchCamera(cameraManager.movementCamera);
