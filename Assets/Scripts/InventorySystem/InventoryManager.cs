@@ -9,7 +9,6 @@ public class InventoryManager : MonoBehaviour
     public GameObject slotPrefab;
     //we have 9 possible slots, so the list will be of size 9. Meaning 9 different items
     public List<InventorySlot> inventorySlots = new List<InventorySlot>(9);
-    public GameObject inventoryTitleText;
 
     private void OnEnable()
     {
