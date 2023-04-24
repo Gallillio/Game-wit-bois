@@ -615,7 +615,7 @@ public class PlayerMovement1 : MonoBehaviour
 			//Debug.Log("Movement Cam Activated");
             cameraManager.SwitchCamera(cameraManager.movementCamera);
 		}
-		else if (LastFallCounter >= 100)
+		else if (LastFallCounter >= 200)
 		{
 			//Debug.Log("Fall Cam Activated");
             cameraManager.SwitchCamera(cameraManager.fallingCamera);
@@ -653,11 +653,11 @@ public class PlayerMovement1 : MonoBehaviour
 
 	private void ChangeCameraViewUpDown()
 	{
-		if (UpOrDownChangeCameraView() == true && LookUpDownButtonHeldTimeCounter > 100 && _moveInput.x == 0)
+		if (UpOrDownChangeCameraView() == true && LookUpDownButtonHeldTimeCounter > 200 && _moveInput.x == 0)
 		{
 			cameraManager.SwitchCamera(cameraManager.ViewUpCamera);
 		}
-		else if (UpOrDownChangeCameraView() == false && LookUpDownButtonHeldTimeCounter > 100 && _moveInput.x == 0)
+		else if (UpOrDownChangeCameraView() == false && LookUpDownButtonHeldTimeCounter > 200 && _moveInput.x == 0)
 		{
 			cameraManager.SwitchCamera(cameraManager.ViewDownCamera);
 		}

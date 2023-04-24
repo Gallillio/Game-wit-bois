@@ -72,19 +72,32 @@ public class PlayerMelee : MonoBehaviour
     private void HitDirection()
     {
         attackPosTransform = transform.Find("AttackPos");
+        holdVerticalInput = PM.holdVerticalInput;
+
         if (PM.IsGrounded())
         {
 
             attackRange = groundedAttackRange;
             attackDistance = groundedAttackDistance;
 
+            //right attack
             if (PM.IsFacingRight)
             {
                 attackPosTransform.localPosition = new Vector2(attackDistance, 0);
             }
+
+            //left attack
             else if (!PM.IsFacingRight)
             {
                 attackPosTransform.localPosition = new Vector2(attackDistance, 0);
+            }
+
+            //up attack on ground
+            if (holdVerticalInput > 0)
+            {
+                attackPosTransform.localPosition = new Vector2(0, attackDistance);
+                attackRange = jumpAttackRange;
+                attackDistance = upAttackRange;
             }
         }
         else
