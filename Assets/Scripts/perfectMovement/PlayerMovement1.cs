@@ -626,9 +626,9 @@ public class PlayerMovement1 : MonoBehaviour
 		}
 	}
 
-	
+
 	private void ChangeCameraViewUp()
-    {
+	{
 		//time the button is held
 		if (Input.GetKey(KeyCode.W))
 		{
@@ -640,11 +640,10 @@ public class PlayerMovement1 : MonoBehaviour
 		}
 
 		if (LookUpButtonHeldTime > 100 && _moveInput.x == 0)
-        {
-            cameraManager.SwitchCamera(cameraManager.ViewUpCamera);
-        }
-
-    }
+		{
+			cameraManager.SwitchCamera(cameraManager.ViewUpCamera);
+		}
+	}
 
 	#endregion
 }
