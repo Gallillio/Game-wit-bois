@@ -26,8 +26,11 @@ public class playerCollectItem : MonoBehaviour
         if (collision.CompareTag("Collectable"))
         {
             string itemType = collision.gameObject.GetComponent<itemCollected>().ItemType;
+            string itemDetails = collision.gameObject.GetComponent<itemCollected>().ItemDetails;
 
+            
             inventory.Add(itemType);
+            inventory.Add(itemDetails);
 
             if (itemType == "coin")
             {
@@ -39,7 +42,7 @@ public class playerCollectItem : MonoBehaviour
             //prints what is in list
             for (int i = 0; i < inventory.Count; i++)
             {
-                print("Item: " + inventory[i]);
+                print("Item: " + inventory[i] + "\n" + "Details: " + inventory[++i]);
             }
         }
 
