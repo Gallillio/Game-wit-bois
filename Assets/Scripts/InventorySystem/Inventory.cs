@@ -12,6 +12,11 @@ namespace InventorySystem
         [SerializeField] private GameObject inventoryGameObject;
 
 
+        private void Start()
+        {
+            inventoryGameObject.SetActive(false);
+        }
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.I))
