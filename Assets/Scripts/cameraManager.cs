@@ -11,6 +11,7 @@ public class cameraManager : MonoBehaviour
     public CinemachineVirtualCamera ViewUpCamera;
     public CinemachineVirtualCamera ViewDownCamera;
 
+
     public CinemachineVirtualCamera startCamera;
     private CinemachineVirtualCamera currentCamera;
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerMovement1 : MonoBehaviour
 {
@@ -13,22 +14,19 @@ public class PlayerMovement1 : MonoBehaviour
 	#endregion
 
 	#region STATE PARAMETERS
-	//Variables control the various actions the player can perform at any time.
-	//These are fields which can are public allowing for other sctipts to read them
-	//but can only be privately written to.
 	Vector3 rotator;
 	public bool IsFacingRight { get; private set; }
 	public bool IsJumping { get; private set; }
 	public bool IsWallJumping { get; private set; }
 	public bool IsDashing { get; private set; }
-	public bool IsSliding { get; private set; }
+	public bool IsWallSliding { get; private set; }
 
 	//Camera
 	[Header("Camera")]
 	[SerializeField] private cameraManager cameraManager;
 	[SerializeField] private GameObject cameraFollowPlayer;
 	private int LastFallCounter = 0;
-	private int LookUpButtonHeldTime = 0;
+	private int LookUpDownButtonHeldTimeCounter = 0;
 
 	//Timers (also all fields, could be private and a method returning a bool could be used)
 	public float LastOnGroundTime { get; private set; } // == coyoteTime when on ground (currently 0.2 but can be edited from the inspector)
@@ -111,12 +109,12 @@ public class PlayerMovement1 : MonoBehaviour
 		if (_moveInput.x != 0)
 			CheckDirectionToFace(_moveInput.x > 0);
 
-		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
+		if (Input.GetButtonDown("Jump"))
 		{
 			OnJumpInput();
 		}
 
-		if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
+		if (Input.GetButtonUp("Jump"))
 		{
 			OnJumpUpInput();
 		}
@@ -239,16 +237,16 @@ public class PlayerMovement1 : MonoBehaviour
 
 		#region SLIDE CHECKS
 		if (CanSlide() && ((LastOnWallLeftTime > 0 && _moveInput.x < 0) || (LastOnWallRightTime > 0 && _moveInput.x > 0)))
-			IsSliding = true;
+			IsWallSliding = true;
 		else
-			IsSliding = false;
+			IsWallSliding = false;
 		#endregion
 
 		#region GRAVITY
 		if (!_isDashAttacking)
 		{
 			//Higher gravity if we've released the jump input or are falling
-			if (IsSliding)
+			if (IsWallSliding)
 			{
 				SetGravityScale(0);
 			}
@@ -291,7 +289,7 @@ public class PlayerMovement1 : MonoBehaviour
 
 		//when falling switch to Falling Camera
 		ChangeCameraFalling();
-		ChangeCameraViewUp();
+		ChangeCameraViewUpDown();
 	}
 
 	private void FixedUpdate()
@@ -310,7 +308,7 @@ public class PlayerMovement1 : MonoBehaviour
 		}
 
 		//Handle Slide
-		if (IsSliding)
+		if (IsWallSliding)
 			Slide();
 	}
 
@@ -543,7 +541,8 @@ public class PlayerMovement1 : MonoBehaviour
 
 
 	#region CHECK METHODS
-	private bool IsGrounded()
+	//Khaled: Changed to public
+	public bool IsGrounded()
 	{
 		return Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
 	}
@@ -610,7 +609,7 @@ public class PlayerMovement1 : MonoBehaviour
 			LastFallCounter = 0;
 		}
 
-		if (RB.velocity.y == 0 || IsGrounded() || IsSliding || IsJumping || IsWallJumping)
+		if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping || IsWallJumping)
 		{
 			//Debug.Log("Movement Cam Activated");
 			cameraManager.SwitchCamera(cameraManager.movementCamera);
@@ -627,23 +626,42 @@ public class PlayerMovement1 : MonoBehaviour
 	}
 
 
-	private void ChangeCameraViewUp()
-	{
-		//time the button is held
-		if (Input.GetKey(KeyCode.W))
-		{
-			LookUpButtonHeldTime++;
-		}
-		else
-		{
-			LookUpButtonHeldTime = 0;
-		}
+    private bool UpOrDownChangeCameraView()
+    {
+        float holdVerticalInput = Input.GetAxisRaw("Vertical");
+        //time the button is held Up or Down
+        if (holdVerticalInput > 0)
+        {
+            LookUpDownButtonHeldTimeCounter++;
+            //Debug.Log(LookUpDownButtonHeldTimeCounter);
+            //true is up
+            return true;
+        }
+        else if (holdVerticalInput < 0)
+        {
+            LookUpDownButtonHeldTimeCounter++;
+            //Debug.Log(-LookUpDownButtonHeldTimeCounter);
+            //false is down
+            return false;
+        }
+        else
+        {
+            LookUpDownButtonHeldTimeCounter = 0;
 
-		if (LookUpButtonHeldTime > 100 && _moveInput.x == 0)
+            return true;
+        }
+    }
+
+	private void ChangeCameraViewUpDown()
+	{
+		if (UpOrDownChangeCameraView() == true && LookUpDownButtonHeldTimeCounter > 100 && _moveInput.x == 0)
 		{
 			cameraManager.SwitchCamera(cameraManager.ViewUpCamera);
 		}
+		else if (UpOrDownChangeCameraView() == false && LookUpDownButtonHeldTimeCounter > 100 && _moveInput.x == 0)
+		{
+			cameraManager.SwitchCamera(cameraManager.ViewDownCamera);
+		}
 	}
-
 	#endregion
 }

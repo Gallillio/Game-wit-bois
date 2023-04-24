@@ -9,8 +9,10 @@ public class enemyAI : MonoBehaviour
     public float speed = 3f;
     public Rigidbody2D rb;
     public SwitchWorld mode;
-    public int detectionRange = 10;  
-    
+    public int detectionRange = 10;
+    [SerializeField] private int health = 100;
+    public GameObject BloodEffect;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -18,6 +20,10 @@ public class enemyAI : MonoBehaviour
 
     void Update()
     {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
         float distToPlayer = Vector2.Distance(transform.position, target.position);
 
         if (distToPlayer < detectionRange && gameObject.tag.Equals("Pixel") && mode.playerMode == SwitchWorld.Mode.VECTOR)
@@ -57,5 +63,10 @@ public class enemyAI : MonoBehaviour
     public void StopChasingPlayer()
     {
         rb.velocity = new Vector2(0,0);
+    }
+    public void TakeDamage(int damage)
+    {
+        Instantiate(BloodEffect, transform.position, Quaternion.identity);
+        health -= damage;
     }
 }
