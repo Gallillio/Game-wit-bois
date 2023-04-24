@@ -55,22 +55,4 @@ public class InventoryManager : MonoBehaviour
         
         inventorySlots.Add(newSlotsComponent);
     }
-
-
-    private void Start()
-    {
-        inventoryTitleText.SetActive(false);
-        gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //shows the inventory panel
-        if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Joystick1Button7)))
-        {
-            inventoryTitleText.SetActive(inventoryTitleText.activeSelf);
-            gameObject.SetActive(gameObject.activeSelf);
-        }
-    }
 }
