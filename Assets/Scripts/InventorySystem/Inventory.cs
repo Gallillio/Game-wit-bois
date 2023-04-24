@@ -9,6 +9,18 @@ namespace InventorySystem
         public static event Action<List<InventoryItem>> OnInventoryChange; 
         public List<InventoryItem> inventory = new List<InventoryItem>(9);
         private Dictionary<ItemData, InventoryItem> itemDictionary = new Dictionary<ItemData, InventoryItem>(); //if we have an existing item in our inventoru we'll add it to the current stacksize of the item we have, else we'll create a new key value(set to 1) to the item
+        [SerializeField] private GameObject inventoryGameObject;
+
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                inventoryGameObject.SetActive(!inventoryGameObject.activeSelf);
+            }
+                
+        }
+
 
         private void OnEnable()
         {
@@ -45,7 +57,6 @@ namespace InventorySystem
 
             }
         }
-        
         public void Remove(ItemData itemData)
         {
             if(itemDictionary.TryGetValue(itemData, out InventoryItem item))

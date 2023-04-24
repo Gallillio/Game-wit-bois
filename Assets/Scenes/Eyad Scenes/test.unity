@@ -4516,7 +4516,7 @@ GameObject:
   - component: {fileID: 865015558}
   - component: {fileID: 865015557}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Inventory Canvas
   m_TagString: Pixel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6205,6 +6205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: []
+  inventoryGameObject: {fileID: 865015556}
 --- !u!4 &1421915187
 Transform:
   m_ObjectHideFlags: 0
