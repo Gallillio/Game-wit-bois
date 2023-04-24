@@ -503,8 +503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f1dbf5a65501749a52fb73b159bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: []
-  coinText: {fileID: 2012882252}
 --- !u!61 &316576548
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4499,11 +4497,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1156374546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b831794a4d4f6194086635d6b52b24dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a2da9ed419fca044bc9225fa80d8330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1335077535}
-  speed: 0.87
+  speed: 3
   rb: {fileID: 0}
   mode: {fileID: 0}
   detectionRange: 10
@@ -5022,8 +5020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f1dbf5a65501749a52fb73b159bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: []
-  coinText: {fileID: 2012882252}
 --- !u!114 &1335077539
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,5 @@ public class PlayerCollectItem : MonoBehaviour
         {
             collectible.Collect();
         }
-        
-        
     }
 }
