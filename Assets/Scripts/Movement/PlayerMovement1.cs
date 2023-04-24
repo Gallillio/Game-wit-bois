@@ -631,7 +631,7 @@ public class PlayerMovement1 : MonoBehaviour
     {
         holdVerticalInput = Input.GetAxisRaw("Vertical");
         //time the button is held Up or Down
-        if (holdVerticalInput > 0)
+        if (holdVerticalInput > 0 && IsGrounded())
         {
             LookUpDownButtonHeldTimeCounter++;
             //true is up

@@ -5,27 +5,28 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private Transform target;//set target from inspector instead of looking in Update
+    
+    [SerializeField] private Transform target; //set target from inspector instead of looking in Update
     private float speed = 3f;
     private Rigidbody2D rb;
     [SerializeField] private SwitchWorld mode;
     [SerializeField] private int detectionRange = 10;
-    [SerializeField] private int health;
-    [SerializeField] private GameObject BloodEffect;
-    //private string BloodEffectName;
+
+    //Health and BloodEffect
+    private ObjectHealth objectHealth;
+
+    //[SerializeField] private int health;
+    //[SerializeField] private GameObject BloodEffect;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //BloodEffectName = BloodEffect.name + "(Clone)";
+
+        objectHealth = GetComponent<ObjectHealth>();
     }
 
     void Update()
     {
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
         float distToPlayer = Vector2.Distance(transform.position, target.position);
 
         if (distToPlayer < detectionRange && gameObject.tag.Equals("Pixel") && mode.playerMode == SwitchWorld.Mode.VECTOR)
@@ -65,12 +66,5 @@ public class EnemyAI : MonoBehaviour
     public void StopChasingPlayer()
     {
         rb.velocity = new Vector2(0,0);
-    }
-    public void TakeDamage(int damage)
-    {
-        Destroy(Instantiate(BloodEffect, transform.position, Quaternion.identity), 1);
-        health -= damage;
-        
-        
     }
 }

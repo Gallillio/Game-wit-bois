@@ -8,12 +8,12 @@ public class PlayerMelee : MonoBehaviour
 
     //CoolDownTime
     private float TimeBtwAttack;
-    private float StartTBA = 0;
+    public float StartTBA;
 
     //Hit Range
     public Transform attackPos;
     private Transform attackPosTransform;
-    
+
     //edit these in editor
     [SerializeField] private float attackRange;
     [SerializeField] private float attackDistance;
@@ -34,15 +34,16 @@ public class PlayerMelee : MonoBehaviour
         groundedAttackRange = attackRange;
         groundedAttackDistance = attackDistance;
 
-        jumpAttackRange = attackRange * 1.5f;
-        upAttackRange = attackDistance * 1.3f;
-        downAttackRange = attackDistance * 0.8f;
+        jumpAttackRange = attackRange * 1f;
+        upAttackRange = attackDistance * 1.1f;
+        downAttackRange = attackDistance * 0.6f;
 
     }
 
-void Update()
+    void Update()
     {
         HitDirection();
+
         //Debug.Log(TimeBtwAttack);
         if (TimeBtwAttack <= 0)
         {
@@ -54,7 +55,7 @@ void Update()
 
                 for (int i = 0; i < enemiesToDamage.Length; i++)
                 {
-                    enemiesToDamage[i].GetComponent<EnemyAI>().TakeDamage(damage);
+                    enemiesToDamage[i].GetComponent<ObjectHealth>().TakeDamage(damage);
                     //Debug.Log(enemiesToDamage.Length);
                 }
             }
@@ -67,11 +68,13 @@ void Update()
     }
 
     //changes hitting direction depending on where the player is looking
+    
     private void HitDirection()
     {
-        attackPosTransform = transform.Find("attackPos");
+        attackPosTransform = transform.Find("AttackPos");
+        if (PM.IsGrounded())
+        {
 
-        if (PM.IsGrounded()) {
             attackRange = groundedAttackRange;
             attackDistance = groundedAttackDistance;
 
@@ -103,7 +106,7 @@ void Update()
                 attackDistance = upAttackRange;
             }
             //side attack in air
-            else if(holdVerticalInput == 0)
+            else if (holdVerticalInput == 0)
             {
                 attackPosTransform.localPosition = new Vector2(attackDistance, 0);
                 attackRange = groundedAttackRange;
