@@ -8,9 +8,12 @@ public class cameraManager : MonoBehaviour
     public CinemachineVirtualCamera[] allCameras;
     public CinemachineVirtualCamera movementCamera;
     public CinemachineVirtualCamera fallingCamera;
+    public CinemachineVirtualCamera ViewUpCamera;
+    public CinemachineVirtualCamera ViewDownCamera;
 
     public CinemachineVirtualCamera startCamera;
     private CinemachineVirtualCamera currentCamera;
+
 
     private void Start()
     {
