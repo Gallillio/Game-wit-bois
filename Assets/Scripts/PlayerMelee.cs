@@ -4,32 +4,46 @@ using UnityEngine;
 
 public class PlayerMelee : MonoBehaviour
 {
+    private float holdVerticalInput;
+
     //CoolDownTime
     private float TimeBtwAttack;
-    public float StartTBA;
+    private float StartTBA = 0;
 
     //Hit Range
     public Transform attackPos;
     private Transform attackPosTransform;
-    private float attackRange = 1f;
-    private float groundedAttackRange;
-    private float jumpAtackRange;
-    private float attackDistance = 1.4f;
+    
+    //edit these in editor
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackDistance;
 
-    public LayerMask whatIsEnemy;
-    public int damage;
+    private float groundedAttackRange;
+    private float groundedAttackDistance;
+    private float jumpAttackRange;
+    private float upAttackRange;
+    private float downAttackRange;
+
+    [SerializeField] private LayerMask whatIsEnemy;
+    [SerializeField] private int damage;
     private PlayerMovement1 PM;
 
     void Start()
     {
         PM = GetComponent<PlayerMovement1>();
         groundedAttackRange = attackRange;
-        jumpAtackRange = attackRange * 1.5f;
+        groundedAttackDistance = attackDistance;
+
+        jumpAttackRange = attackRange * 1.5f;
+        upAttackRange = attackDistance * 1.3f;
+        downAttackRange = attackDistance * 0.8f;
+
     }
 
-    void Update()
+void Update()
     {
         HitDirection();
+        //Debug.Log(TimeBtwAttack);
         if (TimeBtwAttack <= 0)
         {
             if (Input.GetKeyDown("f"))
@@ -42,7 +56,6 @@ public class PlayerMelee : MonoBehaviour
                 {
                     enemiesToDamage[i].GetComponent<EnemyAI>().TakeDamage(damage);
                     //Debug.Log(enemiesToDamage.Length);
-
                 }
             }
             TimeBtwAttack = StartTBA;
@@ -56,10 +69,12 @@ public class PlayerMelee : MonoBehaviour
     //changes hitting direction depending on where the player is looking
     private void HitDirection()
     {
-
         attackPosTransform = transform.Find("attackPos");
+
         if (PM.IsGrounded()) {
             attackRange = groundedAttackRange;
+            attackDistance = groundedAttackDistance;
+
             if (PM.IsFacingRight)
             {
                 attackPosTransform.localPosition = new Vector2(attackDistance, 0);
@@ -71,8 +86,29 @@ public class PlayerMelee : MonoBehaviour
         }
         else
         {
-            attackPosTransform.localPosition = new Vector2(0, -attackDistance*2f);
-            attackRange = jumpAtackRange;
+            holdVerticalInput = PM.holdVerticalInput;
+
+            //down attack in air
+            if (holdVerticalInput < 0)
+            {
+                attackPosTransform.localPosition = new Vector2(0, -attackDistance * 2f);
+                attackRange = jumpAttackRange;
+                attackDistance = downAttackRange;
+            }
+            //up attack in air
+            else if (holdVerticalInput > 0)
+            {
+                attackPosTransform.localPosition = new Vector2(0, attackDistance);
+                attackRange = jumpAttackRange;
+                attackDistance = upAttackRange;
+            }
+            //side attack in air
+            else if(holdVerticalInput == 0)
+            {
+                attackPosTransform.localPosition = new Vector2(attackDistance, 0);
+                attackRange = groundedAttackRange;
+                attackDistance = groundedAttackDistance;
+            }
         }
     }
 

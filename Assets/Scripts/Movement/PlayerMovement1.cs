@@ -27,6 +27,7 @@ public class PlayerMovement1 : MonoBehaviour
 	[SerializeField] private GameObject cameraFollowPlayer;
 	private int LastFallCounter = 0;
 	private int LookUpDownButtonHeldTimeCounter = 0;
+	[HideInInspector] public float holdVerticalInput;
 
 	//Timers (also all fields, could be private and a method returning a bool could be used)
 	public float LastOnGroundTime { get; private set; } // == coyoteTime when on ground (currently 0.2 but can be edited from the inspector)
@@ -626,21 +627,19 @@ public class PlayerMovement1 : MonoBehaviour
 	}
 
 
-    private bool UpOrDownChangeCameraView()
+    public bool UpOrDownChangeCameraView()
     {
-        float holdVerticalInput = Input.GetAxisRaw("Vertical");
+        holdVerticalInput = Input.GetAxisRaw("Vertical");
         //time the button is held Up or Down
         if (holdVerticalInput > 0)
         {
             LookUpDownButtonHeldTimeCounter++;
-            //Debug.Log(LookUpDownButtonHeldTimeCounter);
             //true is up
             return true;
         }
-        else if (holdVerticalInput < 0)
+        else if (holdVerticalInput < 0 && IsGrounded())
         {
             LookUpDownButtonHeldTimeCounter++;
-            //Debug.Log(-LookUpDownButtonHeldTimeCounter);
             //false is down
             return false;
         }
