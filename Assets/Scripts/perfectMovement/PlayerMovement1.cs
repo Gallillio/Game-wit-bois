@@ -541,7 +541,8 @@ public class PlayerMovement1 : MonoBehaviour
 
 
 	#region CHECK METHODS
-	private bool IsGrounded()
+	//Khaled: Changed to public
+	public bool IsGrounded()
 	{
 		return Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
 	}
