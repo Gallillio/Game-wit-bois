@@ -14,7 +14,7 @@ public class PlayerMelee : MonoBehaviour
     private float attackRange = 1f;
     private float groundedAttackRange;
     private float jumpAtackRange;
-    private float attackDistance = 0.8f;
+    private float attackDistance = 1.4f;
 
     public LayerMask whatIsEnemy;
     public int damage;
@@ -34,8 +34,7 @@ public class PlayerMelee : MonoBehaviour
         {
             if (Input.GetKeyDown("f"))
             {
-                //Debug.Log("Tried to hit");
-                
+                Debug.Log("Tried to hit");
                 //finds enemies within range and adds them to an array
                 Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
 
@@ -52,13 +51,6 @@ public class PlayerMelee : MonoBehaviour
         {
             TimeBtwAttack -= Time.deltaTime;
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPos.position, attackRange);
-
     }
 
     //changes hitting direction depending on where the player is looking
@@ -79,12 +71,15 @@ public class PlayerMelee : MonoBehaviour
         }
         else
         {
-            
             attackPosTransform.localPosition = new Vector2(0, -attackDistance*2f);
             attackRange = jumpAtackRange;
         }
-
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
+    }
 
 }

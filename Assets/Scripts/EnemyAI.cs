@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform target;//set target from inspector instead of looking in Update
-    public float speed = 3f;
-    public Rigidbody2D rb;
-    public SwitchWorld mode;
-    public int detectionRange = 10;
-    [SerializeField] private int health = 100;
-    public GameObject BloodEffect;
+    [SerializeField] private Transform target;//set target from inspector instead of looking in Update
+    private float speed = 3f;
+    private Rigidbody2D rb;
+    [SerializeField] private SwitchWorld mode;
+    [SerializeField] private int detectionRange = 10;
+    [SerializeField] private int health;
+    [SerializeField] private GameObject BloodEffect;
+    //private string BloodEffectName;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        //BloodEffectName = BloodEffect.name + "(Clone)";
     }
 
     void Update()
@@ -66,7 +68,9 @@ public class EnemyAI : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        Instantiate(BloodEffect, transform.position, Quaternion.identity);
+        Destroy(Instantiate(BloodEffect, transform.position, Quaternion.identity), 1);
         health -= damage;
+        
+        
     }
 }

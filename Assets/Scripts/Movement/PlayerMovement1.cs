@@ -612,12 +612,12 @@ public class PlayerMovement1 : MonoBehaviour
 		if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping || IsWallJumping)
 		{
 			//Debug.Log("Movement Cam Activated");
-			cameraManager.SwitchCamera(cameraManager.movementCamera);
+            cameraManager.SwitchCamera(cameraManager.movementCamera);
 		}
-		else if (LastFallCounter >= 200)
+		else if (LastFallCounter >= 100)
 		{
 			//Debug.Log("Fall Cam Activated");
-			cameraManager.SwitchCamera(cameraManager.fallingCamera);
+            cameraManager.SwitchCamera(cameraManager.fallingCamera);
 		}
 		else
 		{
