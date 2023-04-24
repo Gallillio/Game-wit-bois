@@ -20,12 +20,8 @@ namespace InventorySystem
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.I))
-            {
                 inventoryGameObject.SetActive(!inventoryGameObject.activeSelf);
-            }
-                
         }
-
 
         private void OnEnable()
         {
@@ -59,7 +55,6 @@ namespace InventorySystem
                 itemDictionary.Add(itemData, newItem);
                 print("Added " + newItem.itemData.displayName + " " + newItem.stackSize + " for the first time");
                 OnInventoryChange?.Invoke(inventory);
-
             }
         }
         public void Remove(ItemData itemData)
@@ -74,7 +69,6 @@ namespace InventorySystem
                     itemDictionary.Remove(itemData);
                 }
                 OnInventoryChange?.Invoke(inventory);
-
             }
         }
     }

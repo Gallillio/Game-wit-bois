@@ -5806,7 +5806,7 @@ MonoBehaviour:
   mode: {fileID: 1914708835}
   detectionRange: 10
   health: 100
-  BloodEffect: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+  BloodEffect: {fileID: 0}
 --- !u!1 &1270257686
 GameObject:
   m_ObjectHideFlags: 0
@@ -5876,7 +5876,7 @@ MonoBehaviour:
   mode: {fileID: 1914708835}
   detectionRange: 10
   health: 100
-  BloodEffect: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+  BloodEffect: {fileID: 0}
 --- !u!58 &1412832510
 CircleCollider2D:
   m_ObjectHideFlags: 0
