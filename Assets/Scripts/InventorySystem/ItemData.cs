@@ -2,8 +2,13 @@
 
 namespace InventorySystem
 {
-    public class ItemData : MonoBehaviour
+    [CreateAssetMenu]
+    public class ItemData : ScriptableObject
     {
         
+        
+        public string displayName;
+        public Sprite icom;
+        public string itemDetails;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using InventorySystem;
+using TMPro;
 using UnityEngine;
 
 public class ItemCollected : MonoBehaviour, ICollectible
