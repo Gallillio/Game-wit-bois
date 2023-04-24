@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 
 
-public class playerCollectItem : MonoBehaviour
+public class PlayerCollectItem : MonoBehaviour
 {
 
     public List<string> inventory;
@@ -25,8 +25,8 @@ public class playerCollectItem : MonoBehaviour
     {
         if (collision.CompareTag("Collectable"))
         {
-            string itemType = collision.gameObject.GetComponent<itemCollected>().ItemType;
-            string itemDetails = collision.gameObject.GetComponent<itemCollected>().ItemDetails;
+            string itemType = collision.gameObject.GetComponent<ItemCollected>().ItemType;
+            string itemDetails = collision.gameObject.GetComponent<ItemCollected>().ItemDetails;
 
             
             inventory.Add(itemType);

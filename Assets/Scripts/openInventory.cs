@@ -4,11 +4,11 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class openInventory : MonoBehaviour
+public class OpenInventory : MonoBehaviour
 {
     public GameObject inventoryPanel;
     public TextMeshProUGUI itemsText;
-    public playerCollectItem collectItem;
+    public PlayerCollectItem collectItem;
     
 
     //TODO idea, add buttons to check info about the item, and be able to equip the item

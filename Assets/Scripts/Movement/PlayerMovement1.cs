@@ -7,7 +7,7 @@ public class PlayerMovement1 : MonoBehaviour
 	//Scriptable object which holds all the player's movement parameters. If you don't want to use it
 	//just paste in all the parameters, though you will need to manuly change all references in this script
 	public PlayerData Data;
-	private normalCameraMovement normalCameraMovement;
+	private NormalCameraMovement normalCameraMovement;
 
 	#region COMPONENTS
 	public Rigidbody2D RB { get; private set; }
@@ -23,7 +23,7 @@ public class PlayerMovement1 : MonoBehaviour
 
 	//Camera
 	[Header("Camera")]
-	[SerializeField] private cameraManager cameraManager;
+	[SerializeField] private CameraManager cameraManager;
 	[SerializeField] private GameObject cameraFollowPlayer;
 	private int LastFallCounter = 0;
 	private int LookUpDownButtonHeldTimeCounter = 0;
@@ -86,7 +86,7 @@ public class PlayerMovement1 : MonoBehaviour
 	{
 		SetGravityScale(Data.gravityScale);
 		IsFacingRight = true;
-		normalCameraMovement = cameraFollowPlayer.GetComponent<normalCameraMovement>();
+		normalCameraMovement = cameraFollowPlayer.GetComponent<NormalCameraMovement>();
 		_extraJumpsLeft = extraJumps;
 	}
 

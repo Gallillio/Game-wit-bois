@@ -41,7 +41,7 @@ public class PlayerMelee : MonoBehaviour
 
                 for (int i = 0; i < enemiesToDamage.Length; i++)
                 {
-                    enemiesToDamage[i].GetComponent<enemyAI>().TakeDamage(damage);
+                    enemiesToDamage[i].GetComponent<EnemyAI>().TakeDamage(damage);
                     //Debug.Log(enemiesToDamage.Length);
 
                 }
