@@ -9,14 +9,16 @@ using UnityEngine;
 public class ItemCollected : MonoBehaviour, ICollectible
 {
     public string ItemType;
-    public string ItemDetails;
-    public static event Action OnCollected; //action that will take place when collected item
+    public static event HandleItemCollected OnCollected; //action that will take place when collected item
+    public delegate void HandleItemCollected(ItemData itemData);
+
+    public ItemData itemData;
 
     public void Collect()
     {
         Destroy(gameObject); //destroy the item being collected
         // print(ItemType + " has been collected!");
-        OnCollected?.Invoke(); //trigger event onCollected
+        OnCollected?.Invoke(itemData); //trigger event onCollected
     }
     
     
