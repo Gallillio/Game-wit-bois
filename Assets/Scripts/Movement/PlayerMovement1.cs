@@ -51,7 +51,7 @@ public class PlayerMovement1 : MonoBehaviour
 	private int _dashesLeft;
 	private bool _dashRefilling;
 	private Vector2 _lastDashDir;
-	private bool _isDashAttacking;
+	public bool _isDashAttacking;
 
 	#endregion
 
@@ -92,7 +92,7 @@ public class PlayerMovement1 : MonoBehaviour
 
 	private void Start()
 	{
-		SetGravityScale(Data.gravityScale);
+        SetGravityScale(Data.gravityScale);
 		IsFacingRight = true;
 		normalCameraMovement = cameraFollowPlayer.GetComponent<NormalCameraMovement>();
 		_extraJumpsLeft = extraJumps;

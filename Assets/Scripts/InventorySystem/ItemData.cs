@@ -8,7 +8,7 @@ namespace InventorySystem
         
         
         public string displayName;
-        public Sprite icom;
+        public Sprite icon;
         public string itemDetails;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using InventorySystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,35 +20,22 @@ public class InventorySlot : MonoBehaviour
         stackSizeText.enabled = false;
     }
 
-    // public void DrawSlot(InventoryItem item)
-    // {
-    //     if (item == null)
-    //     {
-    //         ClearSlot();
-    //         return;
-    //     }
-    // }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     populateItemsText();
-    //     //shows the inventory panel
-    //     if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Joystick1Button7)))
-    //     {
-    //         inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-    //     }
-    // }
-    //
-    
+    public void DrawSlot(InventoryItem item)
+    {
+        if (item == null)
+        {
+            ClearSlot();
+            return;
+        }
+        
+        icon.enabled = true;
+        labelText.enabled = true;
+        stackSizeText.enabled = true;
+
+        //sets slot to icon, label test, and stack size text of the picked up item 
+        icon.sprite = item.itemData.icon;
+        labelText.text = item.itemData.displayName;
+        stackSizeText.text = item.stackSize.ToString();
+
+    }
 }
