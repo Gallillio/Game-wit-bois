@@ -28,7 +28,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702473044491507075}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -117,6 +117,7 @@ MonoBehaviour:
   labelText: {fileID: 9110814721059282956}
   stackSizeText: {fileID: 9110814720299421215}
   itemDetails: 
+  displayName: 
 --- !u!114 &222100569272919462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,8 +166,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17.5633, y: 36.61599}
-  m_SizeDelta: {x: 14.874, y: 12.8913}
+  m_AnchoredPosition: {x: -0.000011444, y: 74.745}
+  m_SizeDelta: {x: 150, y: 108.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9110814720299421200
 CanvasRenderer:
@@ -223,8 +224,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -302,8 +303,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -18.327}
-  m_SizeDelta: {x: 0, y: -36.6547}
+  m_AnchoredPosition: {x: 0, y: -54.55307}
+  m_SizeDelta: {x: 0, y: -109.1069}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9110814720904801398
 CanvasRenderer:
@@ -378,8 +379,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000039577, y: -0.0000069737}
-  m_SizeDelta: {x: 47.6137, y: 11.7887}
+  m_AnchoredPosition: {x: 0.000045781, y: 0.000032425}
+  m_SizeDelta: {x: 150, y: 40.893}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9110814721059282957
 CanvasRenderer:
@@ -436,8 +437,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -513,8 +514,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 24.999985, y: -25}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 75, y: -74.999985}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9110814721917383447
 CanvasRenderer:
