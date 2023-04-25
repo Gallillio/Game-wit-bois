@@ -18,7 +18,7 @@ public class ToolTip : MonoBehaviour
         int headerLength = headerField.text.Length;
         int contentLength = contentField.text.Length;
         
-        //set layout element to true if headerLength or contentLength are > the wrap limit to make tool tip look nicer
+        //set layout element to true if headerLength or contentLength are > the wrap limit to make tool tip size itself accordingly
         layoutElement.enabled = (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
     }
 }
