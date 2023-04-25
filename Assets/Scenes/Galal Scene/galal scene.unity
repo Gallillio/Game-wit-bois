@@ -3864,8 +3864,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156374546}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.008774426, y: -0.20152001, z: 0}
-  m_LocalScale: {x: 0.88068295, y: 0.57577145, z: 1}
+  m_LocalPosition: {x: 0.008774367, y: -0.20152001, z: 0}
+  m_LocalScale: {x: 0.88068295, y: 0.5757715, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1819871796}
@@ -3898,10 +3898,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a373522eeafdc544aa2d30364582855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagable: 1
-  giveUpwardForce: 1
-  health: 100
-  BloodEffect: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
+  damagable: 0
+  giveUpwardForce: 0
+  health: 3
+  BloodEffect: {fileID: 1340485946795974, guid: d0a86346e04015245ae6126e465b87c0, type: 3}
 --- !u!1 &1165870130
 GameObject:
   m_ObjectHideFlags: 3
@@ -4164,7 +4164,8 @@ GameObject:
   - component: {fileID: 1335077539}
   - component: {fileID: 1335077540}
   - component: {fileID: 1335077541}
-  m_Layer: 0
+  - component: {fileID: 1335077542}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4306,6 +4307,7 @@ MonoBehaviour:
   cameraFollowPlayer: {fileID: 1837626451}
   holdVerticalInput: 0
   extraJumps: 0
+  _isDashAttacking: 0
   _groundCheckPoint: {fileID: 1123725767}
   _groundCheckSize: {x: 0.49, y: 0.03}
   _frontWallCheckPoint: {fileID: 952976627}
@@ -4331,17 +4333,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323de75126a7bf34c80707864a5c32ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTBA: 0
+  StartTBA: 0.1
+  DashAttackStrength: 0.2
   attackPos: {fileID: 719236912}
   damage: 1
   upwardsKnockback: 150
-  sidewardsKnockback: 200
+  sidewardsKnockback: 300
   attackRange: 1.3
-  attackDistance: 1.2
+  attackDistance: 1.4
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
-  isAttacking: 0
   downwardStrikeKnockback: 0
 --- !u!114 &1335077541
 MonoBehaviour:
@@ -4355,7 +4357,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a24dc3b7e095044b9f8b4a9f861b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMode: 1
+  currentPlayerMode: 1
+--- !u!95 &1335077542
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335077532}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6bb3537f50eaf6b48895e9b18b6315c9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1536817231
 GameObject:
   m_ObjectHideFlags: 0
@@ -4656,8 +4679,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819871795}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.49, y: -0.82, z: 0}
-  m_LocalScale: {x: 3.419051, y: 1.7368, z: 1}
+  m_LocalPosition: {x: -3.495, y: -0.82, z: 0}
+  m_LocalScale: {x: 1.4288213, y: 1.7368, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1156374551}
@@ -4756,7 +4779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagable: 1
   giveUpwardForce: 1
-  health: 100
+  health: 3
   BloodEffect: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
 --- !u!1 &1837626451
 GameObject:
