@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9110814720509972949}
   - component: {fileID: 9110814720509972948}
   - component: {fileID: 9110814720509972947}
-  - component: {fileID: 7737838663897820063}
+  - component: {fileID: 8489495881447129540}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &7737838663897820063
+--- !u!114 &8489495881447129540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
