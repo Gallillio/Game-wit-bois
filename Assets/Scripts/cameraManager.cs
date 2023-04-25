@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class cameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     public CinemachineVirtualCamera[] allCameras;
     public CinemachineVirtualCamera movementCamera;
     public CinemachineVirtualCamera fallingCamera;
+    public CinemachineVirtualCamera ViewUpCamera;
+    public CinemachineVirtualCamera ViewDownCamera;
+
 
     public CinemachineVirtualCamera startCamera;
     private CinemachineVirtualCamera currentCamera;
+
 
     private void Start()
     {

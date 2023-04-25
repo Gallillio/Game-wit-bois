@@ -1,4 +1,10 @@
 ###############################################################################
+# notebooks/** linguist-vendored
+# *.cs linguist-detectable=true
+#  *.cs linguist-detectable=true
+*.shader linguist-detectable=false
+*.cginc linguist-detectable=false
+###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 * text=auto

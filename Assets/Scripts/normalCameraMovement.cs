@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class normalCameraMovement : MonoBehaviour
+public class NormalCameraMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform playerTransform;
