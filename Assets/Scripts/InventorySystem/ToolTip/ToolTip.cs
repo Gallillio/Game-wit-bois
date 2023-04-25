@@ -12,6 +12,12 @@ public class ToolTip : MonoBehaviour
     public TextMeshProUGUI contentField;
     public LayoutElement layoutElement;
     public int characterWrapLimit;
+    public RectTransform rectTransform;
+
+    public void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
 
     public void SetText(string content, string header = "")
     {
@@ -47,5 +53,14 @@ public class ToolTip : MonoBehaviour
                 (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
 
         }
+
+        Vector2 position = Input.mousePosition;
+
+        float pivotX = position.x / Screen.width;
+        float pivotY = position.y / Screen.height;
+
+        rectTransform.pivot = new Vector2(pivotX, pivotY);
+        transform.position = position;
+        
     }
 }
