@@ -51,7 +51,7 @@ public class PlayerMovement1 : MonoBehaviour
 	private int _dashesLeft;
 	private bool _dashRefilling;
 	private Vector2 _lastDashDir;
-	public bool _isDashAttacking;
+	[HideInInspector] public bool _isDashAttacking;
 
 	#endregion
 
@@ -127,6 +127,8 @@ public class PlayerMovement1 : MonoBehaviour
 			OnJumpUpInput();
 		}
 
+		//makes it only dash side ways
+		//if (Input.GetKeyDown(KeyCode.X) || (Input.GetKeyDown(KeyCode.LeftShift) && (_moveInput.x == -1 || _moveInput.x == 1)) || Input.GetKeyDown(KeyCode.K))
 		if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.K))
 		{
 			OnDashInput();
