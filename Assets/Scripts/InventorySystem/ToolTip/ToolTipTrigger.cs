@@ -12,7 +12,6 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     //when mouse hovers over object with this script it shows tool tip
     public void OnPointerEnter(PointerEventData eventData)
     {
-        
         string content = item.itemDetails;
         string header = item.displayName;
         ToolTipSystem.Show(content,header); //send name to the system and the system will display the name and details
