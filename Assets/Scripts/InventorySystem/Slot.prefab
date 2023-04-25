@@ -116,6 +116,7 @@ MonoBehaviour:
   icon: {fileID: 9110814721917383446}
   labelText: {fileID: 9110814721059282956}
   stackSizeText: {fileID: 9110814720299421215}
+  itemDetails: 
 --- !u!114 &222100569272919462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bc448acc2696c4ea08dfe65b1e161c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 8489495881447129540}
 --- !u!1 &9110814720299421213
 GameObject:
   m_ObjectHideFlags: 0
