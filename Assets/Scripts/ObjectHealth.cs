@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ObjectHealth : MonoBehaviour
 {
-    [SerializeField] private int health;
-    [SerializeField] private GameObject BloodEffect;
+    public bool damagable = true; //if the object will die or not
+    public bool giveUpwardForce = true; // can the player bounce on it
+    [SerializeField] private int health; //how many hits before dying
+    [SerializeField] private GameObject BloodEffect; //animation for after dying
 
     void Start()
     {
@@ -20,7 +22,7 @@ public class ObjectHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void DealDamage(int damage)
     {
         Destroy(Instantiate(BloodEffect, transform.position, Quaternion.identity), 1);
         health -= damage;

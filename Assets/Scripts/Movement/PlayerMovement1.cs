@@ -8,9 +8,10 @@ public class PlayerMovement1 : MonoBehaviour
 	//just paste in all the parameters, though you will need to manuly change all references in this script
 	public PlayerData Data;
 	private NormalCameraMovement normalCameraMovement;
+	private PlayerMelee playerMelee;
 
 	#region COMPONENTS
-	public Rigidbody2D RB { get; private set; }
+	[HideInInspector] public Rigidbody2D RB { get; private set; }
 	#endregion
 
 	#region STATE PARAMETERS
@@ -74,9 +75,15 @@ public class PlayerMovement1 : MonoBehaviour
 	#endregion
 
 	#region LAYERS & TAGS
-	[Header("Layers & Tags")]
+	[Header("Layers & TAGS")]
 	[SerializeField] private LayerMask _groundLayer;
+	[SerializeField] private LayerMask _enemyLayer;
+
 	#endregion
+
+	[HideInInspector] public bool isOnEnemyAttackableCollider; //it is a border that surrounds the enemy a bit further making it easier for player to hit enemy
+	[HideInInspector] public bool giveDamageToPlayer;
+
 
 	private void Awake()
 	{
@@ -290,7 +297,7 @@ public class PlayerMovement1 : MonoBehaviour
 
 		//when falling switch to Falling Camera
 		ChangeCameraFalling();
-		ChangeCameraViewUpDown();
+        ChangeCameraViewUpDown();
 	}
 
 	private void FixedUpdate()
@@ -548,7 +555,47 @@ public class PlayerMovement1 : MonoBehaviour
 		return Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _groundLayer);
 	}
 
-	public void CheckDirectionToFace(bool isMovingRight)
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "EnemyAttackableBorder")
+        {
+            //Debug.Log("collided attackable");
+            isOnEnemyAttackableCollider = true;
+        }
+        else
+        {
+            //Debug.Log("not collided");
+            isOnEnemyAttackableCollider = false;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "EnemyGiveDamageBorder")
+        {
+            giveDamageToPlayer = true;
+        }
+        else
+        {
+            giveDamageToPlayer = false;
+        }
+		//Debug.Log(giveDamageToPlayer);
+    }
+
+    public bool IsOnEnemy()
+    {
+
+        if (Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _enemyLayer) == true && giveDamageToPlayer == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public void CheckDirectionToFace(bool isMovingRight)
 	{
 		if (isMovingRight != IsFacingRight)
 			Turn();
@@ -561,9 +608,6 @@ public class PlayerMovement1 : MonoBehaviour
 
 	private bool CanWallJump()
 	{
-		//Debug.Log("Right: " + LastOnWallRightTime);
-		//Debug.Log("Left: " + LastOnWallLeftTime);
-
 		return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
 			 (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
 	}
@@ -595,41 +639,45 @@ public class PlayerMovement1 : MonoBehaviour
 		else
 			return false;
 	}
-	#endregion
+    #endregion
 
-	#region CHANGE TO DIFFERENT CAMERAS
-	//when falling
-	private void ChangeCameraFalling()
-	{
+    #region CHANGE TO DIFFERENT CAMERAS
+
+    //when falling
+    private void ChangeCameraFalling()
+    {
+		//Debug.Log(LastOnGroundTime);
+
 		if (LastOnGroundTime < 0)
-		{
-			LastFallCounter++;
-		}
-		else
-		{
-			LastFallCounter = 0;
-		}
+        {
+            LastFallCounter++;
+        }
+        else
+        {
+            LastFallCounter = 0;
+        }
 
-		if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping || IsWallJumping)
-		{
-			//Debug.Log("Movement Cam Activated");
+        if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping || IsWallJumping)
+        {
+            //Debug.Log("Movement Cam Activated");
             cameraManager.SwitchCamera(cameraManager.movementCamera);
-		}
-		else if (LastFallCounter >= 200)
-		{
-			//Debug.Log("Fall Cam Activated");
+        }
+        else if (LastFallCounter >= 200)
+        {
+            //Debug.Log("Fall Cam Activated");
             cameraManager.SwitchCamera(cameraManager.fallingCamera);
-		}
-		else
-		{
-			cameraManager.SwitchCamera(cameraManager.movementCamera);
-		}
-	}
+        }
+        else
+        {
+            cameraManager.SwitchCamera(cameraManager.movementCamera);
+        }
+    }
 
 
     public bool UpOrDownChangeCameraView()
     {
         holdVerticalInput = Input.GetAxisRaw("Vertical");
+		//Debug.Log(holdVerticalInput);
         //time the button is held Up or Down
         if (holdVerticalInput > 0 && IsGrounded())
         {

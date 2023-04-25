@@ -8,6 +8,8 @@ TagManager:
   - InventoryPanel
   - Vector
   - Pixel
+  - EnemyAttackableBorder
+  - EnemyGiveDamageBorder
   layers:
   - Default
   - TransparentFX
