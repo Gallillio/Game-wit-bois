@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SwitchWorld : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class SwitchWorld : MonoBehaviour
     {
         VECTOR,PIXEL
     }
-    public Mode playerMode = Mode.PIXEL;
+    [FormerlySerializedAs("playerMode")] public Mode currentPlayerMode = Mode.PIXEL;
     
     // Start is called before the first frame update
     void Start()
@@ -22,15 +23,15 @@ public class SwitchWorld : MonoBehaviour
         //switch player from current mode to next mode
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
-            if (playerMode == Mode.PIXEL)
+            if (currentPlayerMode == Mode.PIXEL)
             {
                 Debug.Log("Player is now in Vector");
-                playerMode = Mode.VECTOR;
+                currentPlayerMode = Mode.VECTOR;
             }
             else
             {
                 Debug.Log("Plyer is now in Pixel");
-                playerMode = Mode.PIXEL;
+                currentPlayerMode = Mode.PIXEL;
             }
         }
     }

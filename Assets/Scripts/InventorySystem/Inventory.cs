@@ -10,19 +10,42 @@ namespace InventorySystem
         public List<InventoryItem> inventory = new List<InventoryItem>(9);
         private Dictionary<ItemData, InventoryItem> itemDictionary = new Dictionary<ItemData, InventoryItem>(); //if we have an existing item in our inventoru we'll add it to the current stacksize of the item we have, else we'll create a new key value(set to 1) to the item
         [SerializeField] private GameObject inventoryGameObject;
-
+        public CanvasGroup canvasGroup;
+        private bool isShowingCanvas; //use this var as a flag to tell whether the canvas is showing or not
 
         private void Start()
         {
-            inventoryGameObject.SetActive(false);
+            isShowingCanvas = false;
+            HideCanvas();
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.I))
-                inventoryGameObject.SetActive(!inventoryGameObject.activeSelf);
+            if (Input.GetKeyDown(KeyCode.I) && isShowingCanvas)
+            {
+                HideCanvas();
+            }
+            else if (Input.GetKeyDown(KeyCode.I) && !isShowingCanvas)
+            {
+                ShowCanvas();
+            }
+                
+        }
+        
+        void ShowCanvas() {
+            canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+            isShowingCanvas = true;
+        }
+        
+        void HideCanvas() {
+            canvasGroup.alpha = 0f; //this makes everything transparent
+            canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
+            isShowingCanvas = false;
         }
 
+        
+        
         private void OnEnable()
         {
             ItemCollected.OnCollected += Add;
