@@ -7,7 +7,8 @@ public class PlayerMelee : MonoBehaviour
 {
     #region FILE REFERENCES
     private PlayerMovement1 PM;
-    //private ObjectHealth objectHealth;
+    private Animator anim;
+    private ObjectHealth objectHealth;
     #endregion
 
     //CoolDownTime
@@ -24,7 +25,7 @@ public class PlayerMelee : MonoBehaviour
 
     //edit these in editor
     [Header("Damage and KnockBack")]
-    [SerializeField] private int damage;
+    [SerializeField] private float damage;
     [SerializeField] private int upwardsKnockback;
     [SerializeField] private int sidewardsKnockback;
 
@@ -38,16 +39,11 @@ public class PlayerMelee : MonoBehaviour
     private float jumpAttackRange;
     private float upAttackRange;
     private float downAttackRange;
-    private float holdVerticalInput;
 
     [SerializeField] private LayerMask whatIsEnemy;
-    [SerializeField] private int damage;
 
-    private PlayerMovement1 PM;
-    private Animator anim;
 
     private float holdVerticalInput; //get when player is holding W or S
-    public bool isAttacking = false;
 
     #region KNOCKBACK EFFECT
     private Vector2 knockbackDirection; //how much the player will go back when hitting an object
@@ -63,7 +59,7 @@ public class PlayerMelee : MonoBehaviour
 
     private void Start()
     {
-        
+        damage *= 0.5f;
         anim = GetComponent<Animator>();
         PM = GetComponent<PlayerMovement1>();
         //objectHealth = GetComponent<ObjectHealth>();
@@ -126,7 +122,7 @@ public class PlayerMelee : MonoBehaviour
         //            //if (objectHealth.damagable == true)
         //            if (enemiesToDamage[i].GetComponent<ObjectHealth>().damagable == true)
         //            {
-        //                enemiesToDamage[i].GetComponent<ObjectHealth>().TakeDamage(damage);
+        //                enemiesToDamage[i].GetComponent<ObjectHealth>().DealDamage(damage);
         //            }
         //            //Debug.Log(enemiesToDamage.Length);
         //        }
@@ -143,7 +139,6 @@ public class PlayerMelee : MonoBehaviour
     #region ON COLLISION, KNOCKBACK OR NOT
     private void HandleCollision(ObjectHealth objHealth)
     {
-        //Debug.Log(isAttacking);
 
         //if doing downward strick, knockback player upwards
         if (objHealth.giveUpwardForce == true && holdVerticalInput < 0 && !PM.IsGrounded() && canDownwardStrikeAttack)
@@ -155,13 +150,8 @@ public class PlayerMelee : MonoBehaviour
             //only downwardstrike once until going on ground
             canDownwardStrikeAttack = false;
 
-            //to not change camera if player is attacking
-            isAttacking = true;
         }
-        //if (PM.IsGrounded() || PM.IsWallSliding)
-        //{
-        //    isAttacking = false;
-        //}
+        
 
         //if attacking sideways on ground, knockback in opposite direction
         if ((holdVerticalInput <=0 && PM.IsGrounded()) || holdVerticalInput == 0)
@@ -319,7 +309,7 @@ public class PlayerMelee : MonoBehaviour
 
         for (int i = 0; i < enemiesToDamage.Length; i++)
         {
-            enemiesToDamage[i].GetComponent<ObjectHealth>().TakeDamage(damage);
+            enemiesToDamage[i].GetComponent<ObjectHealth>().DealDamage(damage);
         }
     }
 
@@ -340,7 +330,7 @@ public class PlayerMelee : MonoBehaviour
 
             for (int i = 0; i < enemiesToDamage.Length; i++)
             {
-                enemiesToDamage[i].GetComponent<ObjectHealth>().TakeDamage(damage);
+                enemiesToDamage[i].GetComponent<ObjectHealth>().DealDamage(damage);
             }
         }
         
