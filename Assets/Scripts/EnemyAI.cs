@@ -29,12 +29,12 @@ public class EnemyAI : MonoBehaviour
     {
         float distToPlayer = Vector2.Distance(transform.position, target.position);
 
-        if (distToPlayer < detectionRange && gameObject.tag.Equals("Pixel") && mode.playerMode == SwitchWorld.Mode.VECTOR)
+        if (distToPlayer < detectionRange && gameObject.tag.Equals("Pixel") && mode.currentPlayerMode == SwitchWorld.Mode.VECTOR)
         {
             //code to chase
             ChasePlayer();
         }
-        else if(distToPlayer < detectionRange && gameObject.tag.Equals("Vector") && mode.playerMode == SwitchWorld.Mode.PIXEL)
+        else if(distToPlayer < detectionRange && gameObject.tag.Equals("Vector") && mode.currentPlayerMode == SwitchWorld.Mode.PIXEL)
         {
             //code to chase
             ChasePlayer();
