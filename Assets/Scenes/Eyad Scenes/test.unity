@@ -1700,7 +1700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &629838866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5016,6 +5016,7 @@ GameObject:
   - component: {fileID: 865015559}
   - component: {fileID: 865015558}
   - component: {fileID: 865015557}
+  - component: {fileID: 865015561}
   m_Layer: 5
   m_Name: InventoryCanvas
   m_TagString: Pixel
@@ -5106,6 +5107,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &865015561
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865015556}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &865931269
 GameObject:
   m_ObjectHideFlags: 0
@@ -7056,6 +7069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: []
   inventoryGameObject: {fileID: 865015556}
+  canvasGroup: {fileID: 865015561}
 --- !u!4 &1421915187
 Transform:
   m_ObjectHideFlags: 0
