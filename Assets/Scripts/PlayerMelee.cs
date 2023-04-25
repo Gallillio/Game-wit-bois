@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// change PM to player after you tell the others
 public class PlayerMelee : MonoBehaviour
 {
-    private float holdVerticalInput;
+    #region FILE REFERENCES
+    private PlayerMovement1 PM;
+    //private ObjectHealth objectHealth;
+    #endregion
 
     //CoolDownTime
     private float TimeBtwAttack;
@@ -15,6 +19,12 @@ public class PlayerMelee : MonoBehaviour
     private Transform attackPosTransform;
 
     //edit these in editor
+    [Header("Damage and KnockBack")]
+    [SerializeField] private int damage;
+    [SerializeField] private int upwardsKnockback;
+    [SerializeField] private int sidewardsKnockback;
+
+    [Header("Settings")]
     [SerializeField] private float attackRange;
     [SerializeField] private float attackDistance;
 
@@ -25,12 +35,27 @@ public class PlayerMelee : MonoBehaviour
     private float downAttackRange;
 
     [SerializeField] private LayerMask whatIsEnemy;
-    [SerializeField] private int damage;
-    private PlayerMovement1 PM;
 
-    void Start()
+    private float holdVerticalInput; //get when player is holding W or S
+    public bool isAttacking = false;
+
+    #region KNOCKBACK EFFECT
+    private Vector2 knockbackDirection; //how much the player will go back when hitting an object
+    private bool collided; //if player collided with object
+    [HideInInspector] public bool downwardStrikeKnockback = false; //if player should go upwards when down attacking an object
+    private bool canDownwardStrikeAttack = true; //after downward slicing once in air, you cant do it again till stepping on ground or wall
+    #endregion
+
+    Collider2D[] enemiesToDamage;
+
+    int counter = 0;
+
+
+    private void Start()
     {
         PM = GetComponent<PlayerMovement1>();
+        //objectHealth = GetComponent<ObjectHealth>();
+
         groundedAttackRange = attackRange;
         groundedAttackDistance = attackDistance;
 
@@ -38,47 +63,157 @@ public class PlayerMelee : MonoBehaviour
         upAttackRange = attackDistance * 1.1f;
         downAttackRange = attackDistance * 0.6f;
 
+        //Vertical Input of Player: -1 = down / 1 = up / 0 = no input
+        holdVerticalInput = PM.holdVerticalInput;
     }
-
-    void Update()
+    
+    private void Update()
     {
+        //Debug.Log(downwardStrikeKnockback);
+
+        if (downwardStrikeKnockback == true)
+        {
+
+        }
+
+        HandleMovement();
         HitDirection();
 
-        //Debug.Log(TimeBtwAttack);
-        if (TimeBtwAttack <= 0)
+        if (Input.GetKeyDown("f") && !Input.GetButton("Jump"))
         {
-            if (Input.GetKeyDown("f"))
+            enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
+            
+            for (int i = 0; i < enemiesToDamage.Length; i++)
             {
-                Debug.Log("Tried to hit");
-                //finds enemies within range and adds them to an array
-                Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
-
-                for (int i = 0; i < enemiesToDamage.Length; i++)
+                //if (objectHealth.damagable == true)
+                if (enemiesToDamage[i].GetComponent<ObjectHealth>().damagable == true)
                 {
-                    enemiesToDamage[i].GetComponent<ObjectHealth>().TakeDamage(damage);
-                    //Debug.Log(enemiesToDamage.Length);
+                    HandleCollision(enemiesToDamage[i].GetComponent<ObjectHealth>());
+
                 }
             }
-            TimeBtwAttack = StartTBA;
         }
-        else
+
+        //Debug.Log(TimeBtwAttack);
+        //if (TimeBtwAttack <= 0)
+        //{
+        //    if (Input.GetKeyDown("f"))
+        //    {
+        //        Debug.Log("Tried to hit");
+        //        //finds enemies within range and adds them to an array
+        //        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
+
+        //        for (int i = 0; i < enemiesToDamage.Length; i++)
+        //        {
+        //            //if (objectHealth.damagable == true)
+        //            if (enemiesToDamage[i].GetComponent<ObjectHealth>().damagable == true)
+        //            {
+        //                enemiesToDamage[i].GetComponent<ObjectHealth>().TakeDamage(damage);
+        //            }
+        //            //Debug.Log(enemiesToDamage.Length);
+        //        }
+        //    }
+        //    TimeBtwAttack = StartTBA;
+        //}
+        //else
+        //{
+        //    TimeBtwAttack -= Time.deltaTime;
+        //}
+
+    }
+
+    #region ON COLLISION, KNOCKBACK OR NOT
+    private void HandleCollision(ObjectHealth objHealth)
+    {
+        //Debug.Log(isAttacking);
+
+        //if doing downward strick, knockback player upwards
+        if (objHealth.giveUpwardForce == true && holdVerticalInput < 0 && !PM.IsGrounded() && canDownwardStrikeAttack)
         {
-            TimeBtwAttack -= Time.deltaTime;
+            knockbackDirection = Vector2.up;
+            downwardStrikeKnockback = true;
+            collided = true;
+            
+            //only downwardstrike once until going on ground
+            canDownwardStrikeAttack = false;
+
+            //to not change camera if player is attacking
+            isAttacking = true;
+        }
+        //if (PM.IsGrounded() || PM.IsWallSliding)
+        //{
+        //    isAttacking = false;
+        //}
+
+        //if attacking sideways on ground, knockback in opposite direction
+        if ((holdVerticalInput <=0 && PM.IsGrounded()) || holdVerticalInput == 0)
+        {
+            collided = true;
+            //is facing right, knockback left
+            if (PM.IsFacingRight)
+            {
+                knockbackDirection = Vector2.left;
+            }
+            else
+            {
+                knockbackDirection = Vector2.right;
+            }
+        }
+
+        objHealth.DealDamage(damage);
+        //Start Coroutine, turns off all bools related to melee attack collision and direction
+        StartCoroutine(NoLongerColliding());
+    }
+
+    private void HandleMovement()
+    {
+
+        if (PM.IsOnEnemy())
+        {
+            float f = PM.RB.transform.position.x;
+            PM.RB.transform.position = new Vector3(PM.RB.transform.position.x + 4, PM.RB.transform.position.y, PM.RB.transform.position.z);
+        }
+
+        if (collided)
+        {
+            //if downstrick attack
+            if (downwardStrikeKnockback)
+            {
+                PM.RB.AddForce(knockbackDirection * upwardsKnockback);
+            }
+            //if side attack
+            else
+            {
+                PM.RB.AddForce(knockbackDirection * sidewardsKnockback);
+            }
         }
     }
 
+    private IEnumerator NoLongerColliding()
+    {
+        yield return new WaitForSeconds(0.1f);
+        collided = false;
+        downwardStrikeKnockback = false;
+    }
+
+    #endregion
     //changes hitting direction depending on where the player is looking
-    
     private void HitDirection()
     {
         attackPosTransform = transform.Find("AttackPos");
-        holdVerticalInput = PM.holdVerticalInput;
+
+        if (PM.IsWallSliding)
+        {
+            canDownwardStrikeAttack = true;
+        }
 
         if (PM.IsGrounded())
         {
-
             attackRange = groundedAttackRange;
             attackDistance = groundedAttackDistance;
+
+            //reset downward strike
+            canDownwardStrikeAttack = true;
 
             //right attack
             if (PM.IsFacingRight)

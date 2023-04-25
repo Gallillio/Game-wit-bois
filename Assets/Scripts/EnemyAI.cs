@@ -12,17 +12,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private SwitchWorld mode;
     [SerializeField] private int detectionRange = 10;
 
-    //Health and BloodEffect
-    private ObjectHealth objectHealth;
-
-    //[SerializeField] private int health;
-    //[SerializeField] private GameObject BloodEffect;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        objectHealth = GetComponent<ObjectHealth>();
     }
 
     void Update()
