@@ -7,8 +7,7 @@ public class PlayerMelee : MonoBehaviour
 {
     #region FILE REFERENCES
     private PlayerMovement1 PM;
-    private Animator anim;
-    private ObjectHealth objectHealth;
+    //private ObjectHealth objectHealth;
     #endregion
 
     //CoolDownTime
@@ -51,6 +50,7 @@ public class PlayerMelee : MonoBehaviour
     [HideInInspector] public bool downwardStrikeKnockback = false; //if player should go upwards when down attacking an object
     private bool canDownwardStrikeAttack = true; //after downward slicing once in air, you cant do it again till stepping on ground or wall
     #endregion
+    public bool IsHitting;
 
     Collider2D[] enemiesToDamage;
 
@@ -60,7 +60,6 @@ public class PlayerMelee : MonoBehaviour
     private void Start()
     {
         damage *= 0.5f;
-        anim = GetComponent<Animator>();
         PM = GetComponent<PlayerMovement1>();
         //objectHealth = GetComponent<ObjectHealth>();
 
@@ -77,13 +76,12 @@ public class PlayerMelee : MonoBehaviour
     
     private void Update()
     {
+
         //Resets collision btw enemy and player   
         if (!PM._isDashAttacking)
         {
             Physics2D.IgnoreLayerCollision(3, 7, false);
         }
-
-        //Debug.Log(downwardStrikeKnockback);
 
         if (downwardStrikeKnockback == true)
         {
@@ -108,31 +106,7 @@ public class PlayerMelee : MonoBehaviour
             }
         }
 
-        //Debug.Log(TimeBtwAttack);
-        //if (TimeBtwAttack <= 0)
-        //{
-        //    if (Input.GetKeyDown("f"))
-        //    {
-        //        Debug.Log("Tried to hit");
-        //        //finds enemies within range and adds them to an array
-        //        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
-
-        //        for (int i = 0; i < enemiesToDamage.Length; i++)
-        //        {
-        //            //if (objectHealth.damagable == true)
-        //            if (enemiesToDamage[i].GetComponent<ObjectHealth>().damagable == true)
-        //            {
-        //                enemiesToDamage[i].GetComponent<ObjectHealth>().DealDamage(damage);
-        //            }
-        //            //Debug.Log(enemiesToDamage.Length);
-        //        }
-        //    }
-        //    TimeBtwAttack = StartTBA;
-        //}
-        //else
-        //{
-        //    TimeBtwAttack -= Time.deltaTime;
-        //}
+        
 
     }
 
@@ -229,7 +203,7 @@ public class PlayerMelee : MonoBehaviour
     //changes hitting direction depending on where the player is looking
     private void HitDirection()
     {
-        attackPosTransform = transform.Find("AttackPos");
+        attackPosTransform = transform.Find("attackPos");
 
         if (PM.IsWallSliding)
         {
@@ -302,7 +276,7 @@ public class PlayerMelee : MonoBehaviour
 
     private void GroundHit()
     {
-        anim.Play("Sword_Swing");
+        
 
         //finds enemies within range and adds them to an array
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
@@ -335,6 +309,8 @@ public class PlayerMelee : MonoBehaviour
         }
         
     }
+
+
 
     private void OnDrawGizmosSelected()
     {
