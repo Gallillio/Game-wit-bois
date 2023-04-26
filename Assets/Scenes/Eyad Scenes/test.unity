@@ -1186,7 +1186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &432543770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1284,8 +1284,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 255, y: -153.125}
-  m_SizeDelta: {x: 490, y: 205.81}
+  m_AnchoredPosition: {x: 250, y: -114.265}
+  m_SizeDelta: {x: 480, y: 137.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &461668960
 MonoBehaviour:
@@ -1564,9 +1564,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90.027855, y: 622.17267}
-  m_SizeDelta: {x: 500, y: 266.03}
-  m_Pivot: {x: 0.5468895, y: 1.1101398}
+  m_AnchoredPosition: {x: -10.548828, y: 686.17676}
+  m_SizeDelta: {x: 500, y: 192.76999}
+  m_Pivot: {x: 0.49450582, y: 1.1353488}
 --- !u!114 &595250619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1694,13 +1694,14 @@ GameObject:
   - component: {fileID: 629838868}
   - component: {fileID: 629838867}
   - component: {fileID: 629838866}
+  - component: {fileID: 629838870}
   m_Layer: 5
   m_Name: DialogueCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &629838866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1776,13 +1777,25 @@ RectTransform:
   m_Children:
   - {fileID: 888615543}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &629838870
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629838865}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &647438273
 GameObject:
   m_ObjectHideFlags: 0
@@ -4983,7 +4996,7 @@ GameObject:
   m_Component:
   - component: {fileID: 833474161}
   m_Layer: 0
-  m_Name: attackPos
+  m_Name: 'AttackPosition '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5131,6 +5144,7 @@ GameObject:
   - component: {fileID: 865931270}
   - component: {fileID: 865931272}
   - component: {fileID: 865931273}
+  - component: {fileID: 865931274}
   m_Layer: 6
   m_Name: StoneVector
   m_TagString: Vector
@@ -5252,6 +5266,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 20, y: 20}
   m_EdgeRadius: 0
+--- !u!114 &865931274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865931269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c63610022acf04295af4327b84eba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMode: {fileID: 1914708835}
 --- !u!1 &880300505
 GameObject:
   m_ObjectHideFlags: 0
@@ -5405,7 +5432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 38, y: 300}
   m_SizeDelta: {x: -200, y: -600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888615544
@@ -5459,8 +5486,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 2102677716}
-  lines: []
+  lines:
+  - 
   textSpeed: 0.1
+  canvasGroup: {fileID: 629838870}
 --- !u!1 &913370304
 GameObject:
   m_ObjectHideFlags: 0
@@ -5783,8 +5812,9 @@ GameObject:
   m_Component:
   - component: {fileID: 973872691}
   - component: {fileID: 973872690}
-  - component: {fileID: 973872692}
+  - component: {fileID: 973872694}
   - component: {fileID: 973872693}
+  - component: {fileID: 973872692}
   m_Layer: 0
   m_Name: VillagerLadyPixel
   m_TagString: Untagged
@@ -5851,13 +5881,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973872689}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -50.953, y: -1.135, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -50.953, y: -1.1350098, z: 0}
   m_LocalScale: {x: 0.55, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &973872692
 Rigidbody2D:
@@ -5880,7 +5910,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &973872693
+--- !u!114 &973872693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973872689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf2ba716dc16bc489187e2b7515d51c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Lady
+  lines:
+  - HEHE
+  - this is from npc
+  quest: {fileID: 0}
+  dialogue: {fileID: 888615546}
+--- !u!61 &973872694
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5890,10 +5938,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000019669533, y: 0}
+  m_Offset: {x: 2.0059848, y: 0.022233486}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5904,7 +5952,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3636364, y: 1}
+  m_Size: {x: 8.045127, y: 3.089961}
   m_EdgeRadius: 0
 --- !u!1 &989171509
 GameObject:
@@ -7235,6 +7283,7 @@ GameObject:
   - component: {fileID: 1661335994}
   - component: {fileID: 1661335993}
   - component: {fileID: 1661335992}
+  - component: {fileID: 1661335995}
   m_Layer: 6
   m_Name: StonePixel
   m_TagString: Pixel
@@ -7356,6 +7405,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1661335995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661335990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c63610022acf04295af4327b84eba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMode: {fileID: 1914708835}
 --- !u!1 &1749593066
 GameObject:
   m_ObjectHideFlags: 0
@@ -7522,8 +7584,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75.535, y: -30.11}
-  m_SizeDelta: {x: 131.07, y: 40.22}
+  m_AnchoredPosition: {x: 68.255005, y: -27.88}
+  m_SizeDelta: {x: 116.51, y: 35.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1796209143
 MonoBehaviour:
@@ -7850,12 +7912,16 @@ MonoBehaviour:
   StartTBA: 0
   DashAttackStrength: 0.04
   attackPos: {fileID: 833474161}
+  damage: 20
+  upwardsKnockback: 0
+  sidewardsKnockback: 0
   attackRange: 1
   attackDistance: 0.8
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
-  damage: 20
+  downwardStrikeKnockback: 0
+  IsHitting: 0
 --- !u!114 &1914708829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7874,6 +7940,7 @@ MonoBehaviour:
   holdVerticalInput: 0
   extraJumps: 0
   _isDashAttacking: 0
+  _moveInput: {x: 0, y: 0}
   _groundCheckPoint: {fileID: 1270257687}
   _groundCheckSize: {x: 0.49, y: 0.03}
   _frontWallCheckPoint: {fileID: 956260010}
@@ -7882,6 +7949,11 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isOnEnemyAttackableCollider: 0
+  giveDamageToPlayer: 0
 --- !u!114 &1914708830
 MonoBehaviour:
   m_ObjectHideFlags: 0
