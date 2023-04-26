@@ -26,7 +26,7 @@ public class PlayerMelee : MonoBehaviour
     //edit these in editor
     [Header("Damage and KnockBack")]
     [SerializeField] private float damage;
-    [SerializeField] private int upwardsKnockback;
+    [SerializeField] private float upwardsKnockback;
     [SerializeField] private int sidewardsKnockback;
 
     [Header("Settings")]
@@ -76,6 +76,7 @@ public class PlayerMelee : MonoBehaviour
 
     private void Update()
     {
+        //print(Data.jumpForce);
 
         //Resets collision btw enemy and player   
         if (!PM._isDashAttacking)
@@ -105,8 +106,6 @@ public class PlayerMelee : MonoBehaviour
                 }
             }
         }
-
-
 
     }
 
@@ -158,24 +157,31 @@ public class PlayerMelee : MonoBehaviour
 
         if (collided)
         {
-            Debug.Log(Vector2.up);
-
             //if downstrick attack
             if (downwardStrikeKnockback)
             {
-                //float force = Data.jumpForce;
+                ////Calculate gravity strength using the formula (gravity = 2 * jumpHeight / timeToJumpApex^2) 
+                //float gravityStrength = -(2 * upwardsKnockback) / (Data.jumpTimeToApex * Data.jumpTimeToApex);
+
+                ////Calculate the rigidbody's gravity scale (ie: gravity strength relative to unity's gravity value, see project settings/Physics2D)
+                //float gravityScale = gravityStrength / Physics2D.gravity.y;
+
+                //////Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
+                //float force = Mathf.Abs(Data.gravityStrength) * Data.jumpTimeToApex;
+
                 //if (PM.RB.velocity.y < 0)
-                    //force -= PM.RB.velocity.y;
-                //PM.RB.AddForce(knockbackDirection * upwardsKnockback, ForceMode2D.Impulse);
+                //    force -= PM.RB.velocity.y;
+                //PM.RB.AddForce(knockbackDirection * force, ForceMode2D.Impulse);
 
                 //PM.Jump();
-                //PM.RB.AddForce(knockbackDirection * upwardsKnockback);
+                PM.RB.AddForce(knockbackDirection * upwardsKnockback, ForceMode2D.Impulse);
             }
             //if side attack
             else
             {
                 PM.RB.AddForce(knockbackDirection * sidewardsKnockback);
             }
+
         }
 
         // cooldown time test
