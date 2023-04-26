@@ -586,7 +586,7 @@ public class PlayerMovement1 : MonoBehaviour
     public bool IsOnEnemy()
     {
 
-        if (Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _enemyLayer) == true && giveDamageToPlayer == true)
+        if (Physics2D.OverlapCapsule(_groundCheckPoint.position, new Vector2(0.94f, 0.16f), CapsuleDirection2D.Horizontal, 0, _enemyLayer) == true)
         {
             return true;
         }

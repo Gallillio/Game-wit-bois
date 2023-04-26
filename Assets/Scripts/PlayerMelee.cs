@@ -52,10 +52,7 @@ public class PlayerMelee : MonoBehaviour
     private bool canDownwardStrikeAttack = true; //after downward slicing once in air, you cant do it again till stepping on ground or wall
     #endregion
 
-    Collider2D[] enemiesToDamage;
-
-    int counter = 0;
-
+    private Collider2D[] enemiesToDamage;
 
     private void Start()
     {
