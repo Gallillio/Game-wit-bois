@@ -707,7 +707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719236912}
   m_Layer: 0
-  m_Name: AttackPos
+  m_Name: AttackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4308,6 +4308,7 @@ MonoBehaviour:
   holdVerticalInput: 0
   extraJumps: 0
   _isDashAttacking: 0
+  _moveInput: {x: 0, y: 0}
   _groundCheckPoint: {fileID: 1123725767}
   _groundCheckSize: {x: 0.49, y: 0.03}
   _frontWallCheckPoint: {fileID: 952976627}
@@ -4337,7 +4338,7 @@ MonoBehaviour:
   DashAttackStrength: 0.2
   attackPos: {fileID: 719236912}
   damage: 1
-  upwardsKnockback: 150
+  upwardsKnockback: 160
   sidewardsKnockback: 300
   attackRange: 1.3
   attackDistance: 1.4
@@ -4345,6 +4346,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   downwardStrikeKnockback: 0
+  canDownwardStrikeAttack: 1
+  IsHitting: 0
 --- !u!114 &1335077541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4368,7 +4371,7 @@ Animator:
   m_GameObject: {fileID: 1335077532}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6bb3537f50eaf6b48895e9b18b6315c9, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

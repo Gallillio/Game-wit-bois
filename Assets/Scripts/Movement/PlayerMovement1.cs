@@ -8,7 +8,8 @@ public class PlayerMovement1 : MonoBehaviour
 	//just paste in all the parameters, though you will need to manuly change all references in this script
 	public PlayerData Data;
 	private NormalCameraMovement normalCameraMovement;
-	private PlayerMelee playerMelee;
+	//public PlayerMelee playerMelee;
+	[SerializeField] private PlayerMelee playerMelee;
 
 	#region COMPONENTS
 	[HideInInspector] public Rigidbody2D RB { get; private set; }
@@ -92,6 +93,7 @@ public class PlayerMovement1 : MonoBehaviour
 
 	private void Start()
 	{
+
         SetGravityScale(Data.gravityScale);
 		IsFacingRight = true;
 		normalCameraMovement = cameraFollowPlayer.GetComponent<NormalCameraMovement>();
@@ -100,6 +102,8 @@ public class PlayerMovement1 : MonoBehaviour
 
 	private void Update()
 	{
+		//Debug.Log(playerMelee.canDownwardStrikeAttack);
+
 
         #region TIMERS
         LastOnGroundTime -= Time.deltaTime;
@@ -439,7 +443,7 @@ public class PlayerMovement1 : MonoBehaviour
 	#endregion
 
 	#region JUMP METHODS
-	private void Jump()
+	public void Jump()
 	{
 		//Ensures we can't call Jump multiple times from one press
 		LastPressedJumpTime = 0;
@@ -651,8 +655,8 @@ public class PlayerMovement1 : MonoBehaviour
     //when falling
     private void ChangeCameraFalling()
     {
-		//Debug.Log(LastOnGroundTime);
-
+		
+		//counter for last on ground
 		if (LastOnGroundTime < 0)
         {
             LastFallCounter++;
@@ -662,12 +666,13 @@ public class PlayerMovement1 : MonoBehaviour
             LastFallCounter = 0;
         }
 
+		//switches camera on these conditions
         if (RB.velocity.y == 0 || IsGrounded() || IsWallSliding || IsJumping || IsWallJumping)
         {
             //Debug.Log("Movement Cam Activated");
             cameraManager.SwitchCamera(cameraManager.movementCamera);
         }
-        else if (LastFallCounter >= 200)
+        else if (LastFallCounter >= 200 && playerMelee.canDownwardStrikeAttack)
         {
             //Debug.Log("Fall Cam Activated");
             cameraManager.SwitchCamera(cameraManager.fallingCamera);
