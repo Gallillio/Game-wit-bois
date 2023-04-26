@@ -17,6 +17,7 @@ public enum QuestStatus
     ONGOING
 }
 
+[CreateAssetMenu]
 public class Quest: ScriptableObject
 {
    [SerializeField] public string questName;
