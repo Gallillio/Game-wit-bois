@@ -56,7 +56,7 @@ public class PlayerMovement1 : MonoBehaviour
 	#endregion
 
 	#region INPUT PARAMETERS
-	private Vector2 _moveInput;
+	public Vector2 _moveInput;
 
 	public float LastPressedJumpTime { get; private set; }
 	public float LastPressedDashTime { get; private set; }
@@ -100,8 +100,9 @@ public class PlayerMovement1 : MonoBehaviour
 
 	private void Update()
 	{
-		#region TIMERS
-		LastOnGroundTime -= Time.deltaTime;
+
+        #region TIMERS
+        LastOnGroundTime -= Time.deltaTime;
 		LastOnWallTime -= Time.deltaTime;
 		LastOnWallRightTime -= Time.deltaTime;
 		LastOnWallLeftTime -= Time.deltaTime;
@@ -119,6 +120,7 @@ public class PlayerMovement1 : MonoBehaviour
 
 		if (Input.GetButtonDown("Jump"))
 		{
+
 			OnJumpInput();
 		}
 
@@ -606,6 +608,7 @@ public class PlayerMovement1 : MonoBehaviour
 	private bool CanJump()
 	{
 		return LastOnGroundTime > 0 && !IsJumping;
+		
 	}
 
 	private bool CanWallJump()
