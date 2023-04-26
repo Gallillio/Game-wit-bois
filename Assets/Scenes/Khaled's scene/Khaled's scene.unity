@@ -708,7 +708,7 @@ GameObject:
   - component: {fileID: 719236912}
   - component: {fileID: 719236913}
   m_Layer: 0
-  m_Name: AttackPos
+  m_Name: attackPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4218,7 +4218,7 @@ GameObject:
   - component: {fileID: 1335077540}
   - component: {fileID: 1335077541}
   - component: {fileID: 1335077542}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4361,6 +4361,7 @@ MonoBehaviour:
   holdVerticalInput: 0
   extraJumps: 1
   _isDashAttacking: 0
+  _moveInput: {x: 0, y: 0}
   _groundCheckPoint: {fileID: 1123725767}
   _groundCheckSize: {x: 0.49, y: 0.03}
   _frontWallCheckPoint: {fileID: 952976627}
@@ -4387,6 +4388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartTBA: 0
+  DashAttackStrength: 0.04
   attackPos: {fileID: 719236912}
   damage: 1
   upwardsKnockback: 150
@@ -4396,8 +4398,8 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
-  isAttacking: 0
   downwardStrikeKnockback: 0
+  IsHitting: 0
 --- !u!114 &1335077541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4410,7 +4412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a24dc3b7e095044b9f8b4a9f861b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMode: 1
+  currentPlayerMode: 1
 --- !u!95 &1335077542
 Animator:
   serializedVersion: 5
@@ -4732,8 +4734,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819871795}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.49, y: -0.82, z: 0}
-  m_LocalScale: {x: 3.419051, y: 1.7368, z: 1}
+  m_LocalPosition: {x: -3.4502, y: -0.82, z: 0}
+  m_LocalScale: {x: 1.3395966, y: 1.7368, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1156374551}
