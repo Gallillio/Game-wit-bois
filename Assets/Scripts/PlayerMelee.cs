@@ -10,13 +10,14 @@ public class PlayerMelee : MonoBehaviour
 {
     #region FILE REFERENCES
     private PlayerMovement1 PM;
+    public PlayerData Data;
     //private ObjectHealth objectHealth;
     #endregion
-
+    #region SETTERS
     //CoolDownTime
     private float TimeBtwAttack;
     public float StartTBA = 0.1f;
-    
+
     private float LastDash;
     //(CoolDown btw each hit while dashing)
     public float DashAttackStrength = 0.04f;
@@ -28,7 +29,7 @@ public class PlayerMelee : MonoBehaviour
     //edit these in editor
     [Header("Damage and KnockBack")]
     [SerializeField] private float damage;
-    [SerializeField] private int upwardsKnockback;
+    [SerializeField] private float upwardsKnockback;
     [SerializeField] private int sidewardsKnockback;
 
     [Header("Settings")]
@@ -44,20 +45,20 @@ public class PlayerMelee : MonoBehaviour
 
     [SerializeField] private LayerMask whatIsEnemy;
 
-
     private float holdVerticalInput; //get when player is holding W or S
-
+    #endregion
     #region KNOCKBACK EFFECT
     private Vector2 knockbackDirection; //how much the player will go back when hitting an object
     private bool collided; //if player collided with object
+
     [HideInInspector] public bool downwardStrikeKnockback = false; //if player should go upwards when down attacking an object
-    private bool canDownwardStrikeAttack = true; //after downward slicing once in air, you cant do it again till stepping on ground or wall
+    public bool canDownwardStrikeAttack = true; //after downward striking once in air, you cant do it again till stepping on ground or wall
     #endregion
 
     [HideInInspector]public bool IsHitting;
     public int Hearts = 4;
 
-    Collider2D[] enemiesToDamage;
+    private Collider2D[] enemiesToDamage;
 
 
 
@@ -78,7 +79,7 @@ public class PlayerMelee : MonoBehaviour
         //Vertical Input of Player: -1 = down / 1 = up / 0 = no input
         holdVerticalInput = PM.holdVerticalInput;
     }
-    
+
     private void Update()
     {
         HandleMovement();
@@ -87,14 +88,14 @@ public class PlayerMelee : MonoBehaviour
 
         if (downwardStrikeKnockback == true)
         {
-
+            //Debug.Log("aa");
         }
 
         if (Input.GetKeyDown("f") && !Input.GetButton("Jump"))
         {
             IsHitting = true;
             enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
-            
+
             for (int i = 0; i < enemiesToDamage.Length; i++)
             {
                 //if (objectHealth.damagable == true)
@@ -110,8 +111,6 @@ public class PlayerMelee : MonoBehaviour
             IsHitting = false;
         }
 
-        
-
     }
 
     #region ON COLLISION, KNOCKBACK OR NOT
@@ -124,15 +123,15 @@ public class PlayerMelee : MonoBehaviour
             knockbackDirection = Vector2.up;
             downwardStrikeKnockback = true;
             collided = true;
-            
+
             //only downwardstrike once until going on ground
             canDownwardStrikeAttack = false;
 
         }
-        
+
 
         //if attacking sideways on ground, knockback in opposite direction
-        if ((holdVerticalInput <=0 && PM.IsGrounded()) || holdVerticalInput == 0)
+        if ((holdVerticalInput <= 0 && PM.IsGrounded()) || holdVerticalInput == 0)
         {
             collided = true;
             //is facing right, knockback left
@@ -170,13 +169,28 @@ public class PlayerMelee : MonoBehaviour
             //if downstrick attack
             if (downwardStrikeKnockback)
             {
-                PM.RB.AddForce(knockbackDirection * upwardsKnockback);
+                ////Calculate gravity strength using the formula (gravity = 2 * jumpHeight / timeToJumpApex^2) 
+                //float gravityStrength = -(2 * upwardsKnockback) / (Data.jumpTimeToApex * Data.jumpTimeToApex);
+
+                ////Calculate the rigidbody's gravity scale (ie: gravity strength relative to unity's gravity value, see project settings/Physics2D)
+                //float gravityScale = gravityStrength / Physics2D.gravity.y;
+
+                //////Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
+                //float force = Mathf.Abs(Data.gravityStrength) * Data.jumpTimeToApex;
+
+                //if (PM.RB.velocity.y < 0)
+                //    force -= PM.RB.velocity.y;
+                //PM.RB.AddForce(knockbackDirection * force, ForceMode2D.Impulse);
+
+                //PM.Jump();
+                PM.RB.AddForce(knockbackDirection * upwardsKnockback, ForceMode2D.Impulse);
             }
             //if side attack
             else
             {
                 PM.RB.AddForce(knockbackDirection * sidewardsKnockback);
             }
+
         }
 
         // cooldown time test
@@ -301,7 +315,7 @@ public class PlayerMelee : MonoBehaviour
 
     private void DashHit()
     {
-        if(Time.time - LastDash < DashAttackStrength)
+        if (Time.time - LastDash < DashAttackStrength)
         {
         }
         else

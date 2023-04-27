@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnimationHandler : MonoBehaviour
-{    
+{
     private PlayerMelee PML;
     private PlayerMovement1 PM;
     private Animator anim;
