@@ -10,6 +10,7 @@ TagManager:
   - Pixel
   - EnemyAttackableBorder
   - EnemyGiveDamageBorder
+  - BreakableWall
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,8 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // change PM to player after you tell the others
@@ -50,15 +53,17 @@ public class PlayerMelee : MonoBehaviour
     [HideInInspector] public bool downwardStrikeKnockback = false; //if player should go upwards when down attacking an object
     private bool canDownwardStrikeAttack = true; //after downward slicing once in air, you cant do it again till stepping on ground or wall
     #endregion
-    public bool IsHitting;
+
+    [HideInInspector]public bool IsHitting;
+    public int Hearts = 4;
 
     Collider2D[] enemiesToDamage;
 
-    int counter = 0;
 
 
     private void Start()
     {
+
         damage *= 0.5f;
         PM = GetComponent<PlayerMovement1>();
         //objectHealth = GetComponent<ObjectHealth>();
@@ -76,23 +81,18 @@ public class PlayerMelee : MonoBehaviour
     
     private void Update()
     {
-
-        //Resets collision btw enemy and player   
-        if (!PM._isDashAttacking)
-        {
-            Physics2D.IgnoreLayerCollision(3, 7, false);
-        }
+        HandleMovement();
+        HitDirection();
+        GetComponent<HealthBar>().playerHealth = Hearts;
 
         if (downwardStrikeKnockback == true)
         {
 
         }
 
-        HandleMovement();
-        HitDirection();
-
         if (Input.GetKeyDown("f") && !Input.GetButton("Jump"))
         {
+            IsHitting = true;
             enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
             
             for (int i = 0; i < enemiesToDamage.Length; i++)
@@ -104,6 +104,10 @@ public class PlayerMelee : MonoBehaviour
 
                 }
             }
+        }
+        else
+        {
+            IsHitting = false;
         }
 
         
@@ -149,6 +153,11 @@ public class PlayerMelee : MonoBehaviour
 
     private void HandleMovement()
     {
+        //Resets collision btw enemy and player   
+        if (!PM._isDashAttacking)
+        {
+            Physics2D.IgnoreLayerCollision(3, 7, false);
+        }
 
         if (PM.IsOnEnemy())
         {
@@ -180,9 +189,13 @@ public class PlayerMelee : MonoBehaviour
             else if (Input.GetKeyDown("f"))
             {
                 GroundHit();
+                IsHitting = true;
                 TimeBtwAttack = StartTBA;
             }
-
+            else
+            {
+                IsHitting = false;
+            }
         }
 
         else
@@ -203,7 +216,7 @@ public class PlayerMelee : MonoBehaviour
     //changes hitting direction depending on where the player is looking
     private void HitDirection()
     {
-        attackPosTransform = transform.Find("attackPos");
+        attackPosTransform = transform.Find("AttackPosition");
 
         if (PM.IsWallSliding)
         {
@@ -276,7 +289,6 @@ public class PlayerMelee : MonoBehaviour
 
     private void GroundHit()
     {
-        
 
         //finds enemies within range and adds them to an array
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
@@ -291,7 +303,6 @@ public class PlayerMelee : MonoBehaviour
     {
         if(Time.time - LastDash < DashAttackStrength)
         {
-
         }
         else
         {
@@ -311,6 +322,25 @@ public class PlayerMelee : MonoBehaviour
     }
 
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (PM._isDashAttacking && collision.gameObject.tag == "BreakableWall")
+        {
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+
+            }
+
+
+    }
+
+    public void PlayerDamaged()
+    {
+        GetComponent<HealthBar>().playerHealth -= 1;
+        Hearts -= 1;
+    }
 
     private void OnDrawGizmosSelected()
     {
