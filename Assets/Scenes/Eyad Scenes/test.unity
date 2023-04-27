@@ -325,8 +325,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1121856224}
+  player: {fileID: 0}
   mode: {fileID: 1121856217}
   detectionRange: 10
+  enemyHitCoolDown: 1
 --- !u!114 &87758153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2628,11 +2630,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Woman
-  state: 0
-  lines:
-  - Please I can't find my Apple
-  - I'll pay with gold
-  - Bring it back
+  haveMet: 0
+  state: 1
+  linesFirstTimeTalk:
+  - Hello there
+  linesQuestLocked:
+  - esfsfseff
+  linesQuestUnlocked:
+  - 'Sup bruh '
+  - get me the golden apple nibba
+  linesQuestDone:
+  - fsefsef
+  linesQuestOngoing:
+  - fesfsfef
   quest: {fileID: 11400000, guid: fdf607b4841c0964d8cfb41f6b7d43e7, type: 2}
   dialogue: {fileID: 1036458274}
 --- !u!1 &799383256
@@ -7888,8 +7898,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1121856224}
+  player: {fileID: 0}
   mode: {fileID: 1121856217}
   detectionRange: 10
+  enemyHitCoolDown: 1
 --- !u!58 &803421107
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -11422,6 +11434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323de75126a7bf34c80707864a5c32ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Data: {fileID: 0}
   StartTBA: 0
   DashAttackStrength: 0.04
   attackPos: {fileID: 870532239}
@@ -11434,7 +11447,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   downwardStrikeKnockback: 0
+  canDownwardStrikeAttack: 1
   IsHitting: 0
+  Hearts: 4
 --- !u!114 &1121856219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11448,6 +11463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 89438eb14a3a8b24d9f3706c0737a4c5, type: 2}
+  playerMelee: {fileID: 0}
   cameraManager: {fileID: 245398989}
   cameraFollowPlayer: {fileID: 667083386}
   holdVerticalInput: 0
@@ -12256,6 +12272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323de75126a7bf34c80707864a5c32ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Data: {fileID: 0}
   StartTBA: 0
   DashAttackStrength: 0.04
   attackPos: {fileID: 1430157448}
@@ -12268,7 +12285,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   downwardStrikeKnockback: 0
+  canDownwardStrikeAttack: 1
   IsHitting: 0
+  Hearts: 4
 --- !u!114 &1271341411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12282,6 +12301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 89438eb14a3a8b24d9f3706c0737a4c5, type: 2}
+  playerMelee: {fileID: 0}
   cameraManager: {fileID: 0}
   cameraFollowPlayer: {fileID: 0}
   holdVerticalInput: 0

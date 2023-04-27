@@ -51,7 +51,6 @@ public class ToolTip : MonoBehaviour
             //set layout element to true if headerLength or contentLength are > the wrap limit to make tool tip size itself accordingly
             layoutElement.enabled =
                 (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
-
         }
 
         Vector2 position = Input.mousePosition;
@@ -61,6 +60,5 @@ public class ToolTip : MonoBehaviour
 
         rectTransform.pivot = new Vector2(pivotX, pivotY);
         transform.position = position;
-        
     }
 }
