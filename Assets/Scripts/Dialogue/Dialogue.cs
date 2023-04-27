@@ -12,33 +12,29 @@ public class Dialogue  : MonoBehaviour
     public float textSpeed;
     private int index;
     public CanvasGroup canvasGroup;
-    // private bool isShowingCanvas; //use this var as a flag to tell whether the canvas is showing or not
     
     // Start is called before the first frame update
     public void Start()
     {
+        //keep the canvas hidden when starting the game
         HideCanvas();
     }
     
     public void ShowCanvas() {
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        // isShowingCanvas = true;
     }
         
     public void HideCanvas() {
         canvasGroup.alpha = 0f; //this makes everything transparent
         canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
-        // isShowingCanvas = false;
     }
-
-
+    
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.E))
         {
-            ShowCanvas();
             if (textComponent.text == lines[index])
             {
                 //instantly fill then go to next line
@@ -54,6 +50,7 @@ public class Dialogue  : MonoBehaviour
 
     public void StartDialogue()
     {
+        ShowCanvas(); //show canvas and start the dialogue
         textComponent.text = string.Empty;
         index = 0;
         StartCoroutine(TypeLine());
@@ -71,7 +68,7 @@ public class Dialogue  : MonoBehaviour
 
     void NextLine()
     {
-        if (index < lines.Length - 1)
+        if (index < lines.Length -1)
         {
             index++;
             textComponent.text = string.Empty;
@@ -82,5 +79,4 @@ public class Dialogue  : MonoBehaviour
             HideCanvas();
         }
     }
-    
 }

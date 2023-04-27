@@ -2627,10 +2627,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf2ba716dc16bc489187e2b7515d51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
+  name: Woman
   state: 0
   lines:
-  - Please get me the apple
+  - Please I can't find my Apple
+  - I'll pay with gold
+  - Bring it back
   quest: {fileID: 11400000, guid: fdf607b4841c0964d8cfb41f6b7d43e7, type: 2}
   dialogue: {fileID: 1036458274}
 --- !u!1 &799383256
@@ -11215,11 +11217,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 866738383}
-  lines:
-  - Hello World
-  - Cool game
-  - WOWWOW
-  textSpeed: 0.1
+  lines: []
+  textSpeed: 0.06
   canvasGroup: {fileID: 1326866476}
 --- !u!114 &1036458275
 MonoBehaviour:
