@@ -48,17 +48,16 @@ public class PlayerMelee : MonoBehaviour
     private Vector2 knockbackDirection; //how much the player will go back when hitting an object
     private bool collided; //if player collided with object
 
-    [HideInInspector] public bool downwardStrikeKnockback = false; //if player should go upwards when down attacking an object
+    //[HideInInspector] public bool isDownStriking = false; //if player should go upwards when down attacking an object
+    public bool isDownStriking = false; //if player should go upwards when down attacking an object
     public bool canDownwardStrikeAttack = true; //after downward striking once in air, you cant do it again till stepping on ground or wall
     #endregion
     public bool IsHitting;
 
     private Collider2D[] enemiesToDamage;
 
-    
     private void Start()
     {
-
         damage *= 0.5f;
         PM = GetComponent<PlayerMovement1>();
         //objectHealth = GetComponent<ObjectHealth>();
@@ -76,23 +75,21 @@ public class PlayerMelee : MonoBehaviour
 
     private void Update()
     {
+
         //print(Data.jumpForce);
 
-        //Resets collision btw enemy and player   
+        //Resets collision btw enemy and player
         if (!PM._isDashAttacking)
         {
+                //the ID of layer Player(3) and Enemy(7)
             Physics2D.IgnoreLayerCollision(3, 7, false);
-        }
-
-        if (downwardStrikeKnockback == true)
-        {
-            //Debug.Log("aa");
         }
 
         HandleMovement();
         HitDirection();
 
-        if (Input.GetKeyDown("f") && !Input.GetButton("Jump"))
+        //only gets knockbacked when not holding space, if holding space he drops again
+        if (Input.GetKeyDown("f"))
         {
             enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
 
@@ -117,14 +114,12 @@ public class PlayerMelee : MonoBehaviour
         if (objHealth.giveUpwardForce == true && holdVerticalInput < 0 && !PM.IsGrounded() && canDownwardStrikeAttack)
         {
             knockbackDirection = Vector2.up;
-            downwardStrikeKnockback = true;
+            isDownStriking = true;
             collided = true;
 
             //only downwardstrike once until going on ground
             canDownwardStrikeAttack = false;
-
         }
-
 
         //if attacking sideways on ground, knockback in opposite direction
         if ((holdVerticalInput <= 0 && PM.IsGrounded()) || holdVerticalInput == 0)
@@ -146,39 +141,25 @@ public class PlayerMelee : MonoBehaviour
         StartCoroutine(NoLongerColliding());
     }
 
-    private void HandleMovement()
+    public void HandleMovement()
     {
-
-        if (PM.IsOnEnemy())
+        if (PM.IsGrounded() || PM.IsWallSliding)
         {
-            float f = PM.RB.transform.position.x;
-            PM.RB.transform.position = new Vector3(PM.RB.transform.position.x + 4, PM.RB.transform.position.y, PM.RB.transform.position.z);
+            isDownStriking = false;
         }
-
         if (collided)
         {
             //if downstrick attack
-            if (downwardStrikeKnockback)
+            if (isDownStriking)
             {
-                ////Calculate gravity strength using the formula (gravity = 2 * jumpHeight / timeToJumpApex^2) 
-                //float gravityStrength = -(2 * upwardsKnockback) / (Data.jumpTimeToApex * Data.jumpTimeToApex);
-
-                ////Calculate the rigidbody's gravity scale (ie: gravity strength relative to unity's gravity value, see project settings/Physics2D)
-                //float gravityScale = gravityStrength / Physics2D.gravity.y;
-
-                //////Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
-                //float force = Mathf.Abs(Data.gravityStrength) * Data.jumpTimeToApex;
-
-                //if (PM.RB.velocity.y < 0)
-                //    force -= PM.RB.velocity.y;
-                //PM.RB.AddForce(knockbackDirection * force, ForceMode2D.Impulse);
-
-                //PM.Jump();
-                PM.RB.AddForce(knockbackDirection * upwardsKnockback, ForceMode2D.Impulse);
+                //PM.SetGravityScale(0);
+                PM.RB.velocity = new Vector2(PM.RB.velocity.x, upwardsKnockback);
             }
             //if side attack
             else
             {
+                //use this later to fix holding the button from cancelling knockback
+                //PM.RB.velocity = new Vector2(sidewardsKnockback, PM.RB.velocity.y);
                 PM.RB.AddForce(knockbackDirection * sidewardsKnockback);
             }
 
@@ -196,7 +177,6 @@ public class PlayerMelee : MonoBehaviour
                 GroundHit();
                 TimeBtwAttack = StartTBA;
             }
-
         }
 
         else
@@ -206,11 +186,11 @@ public class PlayerMelee : MonoBehaviour
         }
     }
 
-    private IEnumerator NoLongerColliding()
+    public IEnumerator NoLongerColliding()
     {
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f);
         collided = false;
-        downwardStrikeKnockback = false;
     }
 
     #endregion
@@ -224,6 +204,7 @@ public class PlayerMelee : MonoBehaviour
             canDownwardStrikeAttack = true;
         }
 
+        holdVerticalInput = PM.holdVerticalInput;
         if (PM.IsGrounded())
         {
             attackRange = groundedAttackRange;
@@ -233,29 +214,25 @@ public class PlayerMelee : MonoBehaviour
             canDownwardStrikeAttack = true;
 
             //right attack
-            if (PM.IsFacingRight)
-            {
-                attackPosTransform.localPosition = new Vector2(attackDistance, 0);
-            }
 
-            //left attack
-            else if (!PM.IsFacingRight)
-            {
-                attackPosTransform.localPosition = new Vector2(attackDistance, 0);
-            }
-
-            //up attack on ground
+            //down attack in air
+            //up attack in air
             if (holdVerticalInput > 0)
             {
                 attackPosTransform.localPosition = new Vector2(0, attackDistance);
                 attackRange = jumpAttackRange;
                 attackDistance = upAttackRange;
             }
+            //side attack in air
+            else if (holdVerticalInput == 0)
+            {
+                attackPosTransform.localPosition = new Vector2(attackDistance, 0);
+                attackRange = groundedAttackRange;
+                attackDistance = groundedAttackDistance;
+            }
         }
         else
         {
-            holdVerticalInput = PM.holdVerticalInput;
-
             //down attack in air
             if (holdVerticalInput < 0)
             {
@@ -290,8 +267,6 @@ public class PlayerMelee : MonoBehaviour
 
     private void GroundHit()
     {
-
-
         //finds enemies within range and adds them to an array
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
 
