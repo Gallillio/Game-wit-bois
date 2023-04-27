@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnimationHandler : MonoBehaviour
-{    
+{
     private PlayerMelee PML;
     private PlayerMovement1 PM;
     private Animator anim;
@@ -40,7 +40,12 @@ public class AnimationHandler : MonoBehaviour
         }
         if (PML.IsHitting)
         {
+            anim.SetBool("Hit", true);
             anim.Play("Player_Hit");
+        }
+        else
+        {
+            anim.SetBool("Hit", false);
         }
     }
 }
