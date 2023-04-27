@@ -12,6 +12,7 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
     private int index;
     public CanvasGroup canvasGroup;
+    public bool isFinished = false;
 
     // Start is called before the first frame update
     public void Start()
@@ -46,6 +47,7 @@ public class Dialogue : MonoBehaviour
             {
                 StopAllCoroutines();
                 textComponent.text = lines[index];
+                isFinished = true;
             }
         }
     }
@@ -79,6 +81,7 @@ public class Dialogue : MonoBehaviour
         else
         {
             HideCanvas();
+            isFinished = true;
         }
     }
 }

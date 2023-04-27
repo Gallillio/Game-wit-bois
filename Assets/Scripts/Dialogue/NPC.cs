@@ -15,7 +15,7 @@ public enum NPCState
 
 public class NPC : MonoBehaviour
 {
-    public string name;
+    public string npcName;
     public bool haveMet; //when talking to an NPC for the first time 
     public NPCState state;
     public List<string> linesFirstTimeTalk;
@@ -25,10 +25,11 @@ public class NPC : MonoBehaviour
     public List<string> linesQuestOngoing;
     private List<List<string>> lines = new List<List<string>>(); //2d list that will store all our lines
     public Quest quest;
+
     public Dialogue dialogue;
     // public int questNumber; <-- use this when quests work well and u want to add more than one
     // quest to npc and each quest correspond to line (lines will be a 2d array) 
-    
+
 
     private void Start()
     {
@@ -58,12 +59,14 @@ public class NPC : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && target.gameObject.CompareTag("Player"))
             {
                 dialogue.StartDialogue();
-                haveMet = true;
+                if (dialogue.isFinished)
+                {
+                    haveMet = true; //this gets triggered on its own, make a flag that checks wheatehr a dialogue has finished or not    
+                }
             }
         }
 
         if (haveMet)
-        {
             switch (quest.questStatus)
             {
                 case QuestStatus.LOCKED:
@@ -81,7 +84,6 @@ public class NPC : MonoBehaviour
                     NpcTalk(4, target);
                     break;
             }
-        }
     }
 
     //when we leave make the dialogue empty
@@ -90,7 +92,7 @@ public class NPC : MonoBehaviour
         dialogue.HideCanvas();
         dialogue.lines = new List<string>(); //empty list
     }
-    
+
     private void NpcTalk(int line, Component target)
     {
         //add character name to lines
