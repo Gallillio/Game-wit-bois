@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour
         Inventory.OnInventoryChange -= DrawInventory;
     }
     
-    public void ResetInventroy()
+    public void ResetInventory()
     {
         foreach (Transform childTransform in transform)
         {
@@ -31,7 +31,7 @@ public class InventoryManager : MonoBehaviour
 
     public void DrawInventory(List<InventoryItem> inventory)
     {
-        ResetInventroy();
+        ResetInventory();
 
         for (int i = 0; i < inventorySlots.Capacity; i++)
         {

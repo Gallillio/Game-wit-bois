@@ -12,7 +12,7 @@ public class Dialogue  : MonoBehaviour
     public float textSpeed;
     private int index;
     public CanvasGroup canvasGroup;
-    private bool isShowingCanvas; //use this var as a flag to tell whether the canvas is showing or not
+    // private bool isShowingCanvas; //use this var as a flag to tell whether the canvas is showing or not
     
     // Start is called before the first frame update
     public void Start()
@@ -23,13 +23,13 @@ public class Dialogue  : MonoBehaviour
     public void ShowCanvas() {
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-        isShowingCanvas = true;
+        // isShowingCanvas = true;
     }
         
     public void HideCanvas() {
         canvasGroup.alpha = 0f; //this makes everything transparent
         canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
-        isShowingCanvas = false;
+        // isShowingCanvas = false;
     }
 
 
