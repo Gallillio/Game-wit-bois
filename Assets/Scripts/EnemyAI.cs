@@ -9,8 +9,11 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Transform target; //set target from inspector instead of looking in Update
     private float speed = 3f;
     private Rigidbody2D rb;
+    public GameObject player;
     [SerializeField] private SwitchWorld mode;
     [SerializeField] private int detectionRange = 10;
+    private float lastHit;
+    public float enemyHitCoolDown = 1f;
 
     private void Start()
     {
@@ -53,10 +56,31 @@ public class EnemyAI : MonoBehaviour
             transform.localScale = new Vector2(-1, 1);
             GetComponent<SpriteRenderer>().flipX = true;
         }
+
+
     }
 
     public void StopChasingPlayer()
     {
         rb.velocity = new Vector2(0,0);
+    }
+
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        
+        if(collision.gameObject.tag == "Player")
+        {
+            if (Time.time - lastHit < enemyHitCoolDown)
+            {
+            }
+            else
+            {
+                lastHit = Time.time;
+                collision.gameObject.GetComponent<PlayerMelee>().PlayerDamaged();
+
+            }
+
+        }
     }
 }

@@ -43,8 +43,6 @@ namespace InventorySystem
             canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
             isShowingCanvas = false;
         }
-
-        
         
         private void OnEnable()
         {

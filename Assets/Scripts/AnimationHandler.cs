@@ -40,7 +40,12 @@ public class AnimationHandler : MonoBehaviour
         }
         if (PML.IsHitting)
         {
+            anim.SetBool("Hit", true);
             anim.Play("Player_Hit");
+        }
+        else
+        {
+            anim.SetBool("Hit", false);
         }
     }
 }
