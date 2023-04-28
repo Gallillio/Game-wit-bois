@@ -3673,7 +3673,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
-  downwardStrikeKnockback: 0
+  isDownStriking: 0
   canDownwardStrikeAttack: 1
   IsHitting: 0
   Hearts: 4
@@ -5988,6 +5988,7 @@ MonoBehaviour:
   lootList:
   - {fileID: 11400000, guid: 3f358a0204ebed24eb2b3b778fa4415d, type: 2}
   - {fileID: 11400000, guid: 10f79191cd1bba54a922f99bfe393980, type: 2}
+  - {fileID: 11400000, guid: 40cdb11792fb19348b8ea483db58d5c8, type: 2}
 --- !u!1 &967097196
 GameObject:
   m_ObjectHideFlags: 0
@@ -7093,22 +7094,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf2ba716dc16bc489187e2b7515d51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: Woman
-  haveMet: 0
-  state: 1
-  linesFirstTimeTalk:
-  - Hello there
-  linesQuestLocked:
-  - esfsfseff
-  linesQuestUnlocked:
-  - 'Sup bruh '
-  - get me the golden apple nibba
-  linesQuestDone:
-  - fsefsef
-  linesQuestOngoing:
-  - fesfsfef
-  quest: {fileID: 11400000, guid: fdf607b4841c0964d8cfb41f6b7d43e7, type: 2}
-  dialogue: {fileID: 1178978678}
 --- !u!61 &1307393112
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14105,8 +14090,6 @@ MonoBehaviour:
   droppedItemPrefab: {fileID: 7938420644505413293, guid: 17a97b6dd2a848643a6186eec4de59aa, type: 3}
   lootList:
   - {fileID: 11400000, guid: 3f358a0204ebed24eb2b3b778fa4415d, type: 2}
-  - {fileID: 11400000, guid: 40cdb11792fb19348b8ea483db58d5c8, type: 2}
-  - {fileID: 11400000, guid: 10f79191cd1bba54a922f99bfe393980, type: 2}
 --- !u!1 &1887826547
 GameObject:
   m_ObjectHideFlags: 0

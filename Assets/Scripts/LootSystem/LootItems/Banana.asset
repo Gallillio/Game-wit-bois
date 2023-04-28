@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Banana
   m_EditorClassIdentifier: 
   dropChance: 50
-  itemData: {fileID: 11400000, guid: 1c6791e01f0aeae4487e579e72ae8ccd, type: 2}
+  itemData: {fileID: 11400000, guid: 7f6b06ece318e7b4187e332cc29ac822, type: 2}
