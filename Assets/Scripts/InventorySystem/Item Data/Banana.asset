@@ -15,3 +15,4 @@ MonoBehaviour:
   displayName: Banana
   icon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
   itemDetails: Bonus
+  dropChance: 50

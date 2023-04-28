@@ -21,7 +21,7 @@ public class ToolTip : MonoBehaviour
 
     public void SetText(string content, string header = "")
     {
-        if (string.IsNullOrEmpty(header))
+        if (string.IsNullOrEmpty(header) || string.IsNullOrEmpty(content))
         {
             headerField.gameObject.SetActive(false);
         }

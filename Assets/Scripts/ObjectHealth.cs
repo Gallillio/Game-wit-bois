@@ -18,6 +18,10 @@ public class ObjectHealth : MonoBehaviour
     {
         if (health <= 0)
         {
+            if (gameObject.tag.Equals("Pixel") || gameObject.tag.Equals("Vector"))
+            {
+                gameObject.GetComponent<LootBag>().instatiateLoot(transform.position);
+            }
             Destroy(gameObject);
         }
     }
