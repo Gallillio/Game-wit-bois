@@ -3661,7 +3661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323de75126a7bf34c80707864a5c32ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 0}
+  Data: {fileID: 11400000, guid: 89438eb14a3a8b24d9f3706c0737a4c5, type: 2}
   StartTBA: 0
   DashAttackStrength: 0.04
   attackPos: {fileID: 2008172677}
@@ -5838,7 +5838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 452822276}
-  player: {fileID: 0}
+  player: {fileID: 452822265}
   mode: {fileID: 452822269}
   detectionRange: 10
   enemyHitCoolDown: 1
@@ -5986,7 +5986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droppedItemPrefab: {fileID: 7938420644505413293, guid: 17a97b6dd2a848643a6186eec4de59aa, type: 3}
   lootList:
-  - {fileID: 11400000, guid: 40cdb11792fb19348b8ea483db58d5c8, type: 2}
+  - {fileID: 11400000, guid: 3f358a0204ebed24eb2b3b778fa4415d, type: 2}
   - {fileID: 11400000, guid: 10f79191cd1bba54a922f99bfe393980, type: 2}
 --- !u!1 &967097196
 GameObject:
@@ -13956,7 +13956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 452822276}
-  player: {fileID: 0}
+  player: {fileID: 452822265}
   mode: {fileID: 452822269}
   detectionRange: 10
   enemyHitCoolDown: 1
@@ -14104,6 +14104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droppedItemPrefab: {fileID: 7938420644505413293, guid: 17a97b6dd2a848643a6186eec4de59aa, type: 3}
   lootList:
+  - {fileID: 11400000, guid: 3f358a0204ebed24eb2b3b778fa4415d, type: 2}
+  - {fileID: 11400000, guid: 40cdb11792fb19348b8ea483db58d5c8, type: 2}
   - {fileID: 11400000, guid: 10f79191cd1bba54a922f99bfe393980, type: 2}
 --- !u!1 &1887826547
 GameObject:

@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using InventorySystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
 public class Loot : ScriptableObject
 {
     //create the basic outline for a loot (i think we can use items)
-    public Sprite lootSprite;
-    public string lootName;
-    public int dropChance;
+    public int dropChance; //chance of the item dropping
+    public ItemData itemData; //refrence of the item data
 
-    public Loot(string lootName, int dropChance)
+    public Loot(int dropChance, ItemData itemData) //constructor of the object
     {
-        this.lootName = lootName;
         this.dropChance = dropChance;
+        this.itemData = itemData;
     }
 }

@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84667a96a3b41a40b4e68d0afed87b4, type: 3}
   m_Name: Banana
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
-  lootName: Banana
-  dropChance: 10
+  dropChance: 50
+  itemData: {fileID: 11400000, guid: 1c6791e01f0aeae4487e579e72ae8ccd, type: 2}

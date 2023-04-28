@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84667a96a3b41a40b4e68d0afed87b4, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: 21300000, guid: 5b0ae1e8c62c6e84896920153a04cdeb, type: 3}
-  lootName: Sword
   dropChance: 10
+  itemData: {fileID: 11400000, guid: 4bd3fcfd2214e5540b5ea696ab01bd49, type: 2}

@@ -27,20 +27,16 @@ public class LootBag : MonoBehaviour
             Loot droppedItem = possibleItems[Random.Range(0, possibleItems.Count)]; //gets only one item randomly
             return droppedItem;
         }
-        // else
-        // {
-        //     GetDroppedItem(); //call the function again if nothing was dropped
-        // }
-        Debug.Log("No Loot Dropped");
+        // Debug.Log("No Loot Dropped");
         return null;
     }
 
-    public void instatiateLoot(Vector2 spwanPoint)
+    public void instatiateLoot(Vector2 spawnPoint)
     {
         Loot droppedItem = GetDroppedItem();
-        GameObject lootGameObject = Instantiate(droppedItemPrefab, spwanPoint, Quaternion.identity);
-        lootGameObject.GetComponent<SpriteRenderer>().sprite = droppedItem.lootSprite; //edit this later to accept items
-        
+        GameObject lootGameObject = Instantiate(droppedItemPrefab, spawnPoint, Quaternion.identity);
+        lootGameObject.GetComponent<SpriteRenderer>().sprite = droppedItem.itemData.icon; //set the item sprite 
+        lootGameObject.GetComponent<ItemCollected>().itemData = droppedItem.itemData; //set the item data, that benfits us when the item is collected
     }
     
 }
