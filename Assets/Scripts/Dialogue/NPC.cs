@@ -25,7 +25,7 @@ public class NPC : MonoBehaviour
     public List<string> linesQuestOngoing;
     private List<List<string>> lines = new List<List<string>>(); //2d list that will store all our lines
     public Quest quest;
-
+    // private bool inRange = false;
     public Dialogue dialogue;
     // public int questNumber; <-- use this when quests work well and u want to add more than one
     // quest to npc and each quest correspond to line (lines will be a 2d array) 
@@ -41,7 +41,6 @@ public class NPC : MonoBehaviour
         lines.Add(linesQuestOngoing);
     }
 
-
     //when we press E when we're near the NPC we will start a dialogue and set quest to Ongoing.
     private void OnTriggerStay2D(Collider2D target)
     {
@@ -50,14 +49,14 @@ public class NPC : MonoBehaviour
         //each value will correspond to a desired array of lines
         //ex: if quest is locked the npc will say smth different than if the quest is ongoing
         //so we will check on the quest status, and depending on that we'll assign dialogue lines
-
-
+        
         if (!haveMet)
         {
             //add character name to lines
             dialogue.lines = lines[0];
-            if (Input.GetKeyDown(KeyCode.E) && target.gameObject.CompareTag("Player"))
+            if (Input.GetKeyDown("e") && target.gameObject.CompareTag("Player"))
             {
+                print("key pressed");
                 dialogue.StartDialogue();
                 if (dialogue.isFinished)
                 {
@@ -67,6 +66,7 @@ public class NPC : MonoBehaviour
         }
 
         if (haveMet)
+        {
             switch (quest.questStatus)
             {
                 case QuestStatus.LOCKED:
@@ -84,6 +84,7 @@ public class NPC : MonoBehaviour
                     NpcTalk(4, target);
                     break;
             }
+        }
     }
 
     //when we leave make the dialogue empty
@@ -97,8 +98,9 @@ public class NPC : MonoBehaviour
     {
         //add character name to lines
         dialogue.lines = lines[line];
-        if (Input.GetKeyDown(KeyCode.E) && target.gameObject.CompareTag("Player"))
+        if (Input.GetKeyDown("e") && target.gameObject.CompareTag("Player"))
         {
+            print("Key pressed");
             dialogue.StartDialogue();
         }
     }
