@@ -5,35 +5,38 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 
-public class Dialogue  : MonoBehaviour
+public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
-    public string[] lines;
+    public List<string> lines;
     public float textSpeed;
     private int index;
     public CanvasGroup canvasGroup;
-    
+    public bool isFinished = false;
+
     // Start is called before the first frame update
     public void Start()
     {
         //keep the canvas hidden when starting the game
         HideCanvas();
     }
-    
-    public void ShowCanvas() {
+
+    public void ShowCanvas()
+    {
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
     }
-        
-    public void HideCanvas() {
+
+    public void HideCanvas()
+    {
         canvasGroup.alpha = 0f; //this makes everything transparent
         canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
     }
-    
+
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (textComponent.text == lines[index])
             {
@@ -44,6 +47,7 @@ public class Dialogue  : MonoBehaviour
             {
                 StopAllCoroutines();
                 textComponent.text = lines[index];
+                isFinished = true;
             }
         }
     }
@@ -68,7 +72,7 @@ public class Dialogue  : MonoBehaviour
 
     void NextLine()
     {
-        if (index < lines.Length -1)
+        if (index < lines.Count - 1)
         {
             index++;
             textComponent.text = string.Empty;
@@ -77,6 +81,7 @@ public class Dialogue  : MonoBehaviour
         else
         {
             HideCanvas();
+            isFinished = true;
         }
     }
 }

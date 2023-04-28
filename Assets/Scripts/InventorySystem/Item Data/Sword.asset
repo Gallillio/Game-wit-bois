@@ -15,3 +15,4 @@ MonoBehaviour:
   displayName: Sword
   icon: {fileID: 21300000, guid: 5b0ae1e8c62c6e84896920153a04cdeb, type: 3}
   itemDetails: Slash and KILL THEM ALL!
+  dropChance: 10

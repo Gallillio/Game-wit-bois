@@ -15,3 +15,4 @@ MonoBehaviour:
   displayName: Gold Apple
   icon: {fileID: 21300000, guid: dd6d3eaa0cfe8ac4794313b24d94fb7c, type: 3}
   itemDetails: An apple a day keeps a vector away!
+  dropChance: 1

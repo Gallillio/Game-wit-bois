@@ -13,13 +13,13 @@ public class ToolTipSystem : MonoBehaviour
         current = this;
     }
 
-    public static void Show(string content, string header ="")
+    public static void Show(string content, string header = "")
     {
         current.toolTip.SetText(content, header); //recive content and header and show them
         current.toolTip.gameObject.SetActive(true);
     }
-    
-    
+
+
     public static void Hide()
     {
         current.toolTip.gameObject.SetActive(false);

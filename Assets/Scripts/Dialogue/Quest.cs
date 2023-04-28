@@ -3,7 +3,6 @@ using UnityEngine;
 
 public enum QuestType
 {
-    NONE,
     FETCH,
     BOUNTY_HUNT,
     OTHER
@@ -18,11 +17,9 @@ public enum QuestStatus
 }
 
 [CreateAssetMenu]
-public class Quest: ScriptableObject
+public class Quest : ScriptableObject
 {
-   [SerializeField] public string questName;
-   [SerializeField] public QuestType questType;
-   [SerializeField] public QuestStatus questStatus;
-    
-   
+    [SerializeField] public string questName;
+    [SerializeField] public QuestType questType;
+    [SerializeField] public QuestStatus questStatus;
 }
