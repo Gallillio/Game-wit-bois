@@ -10,7 +10,8 @@ public class SwitchWorld : MonoBehaviour
         VECTOR,PIXEL
     }
     [FormerlySerializedAs("playerMode")] public Mode currentPlayerMode = Mode.PIXEL;
-    
+    [SerializeField] private AudioSource switchModeSfxAudioSource;
+    public AudioClip switchSfx;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,9 @@ public class SwitchWorld : MonoBehaviour
                 Debug.Log("Plyer is now in Pixel");
                 currentPlayerMode = Mode.PIXEL;
             }
+
+            switchModeSfxAudioSource.clip = switchSfx;
+            switchModeSfxAudioSource.Play();
         }
     }
 }

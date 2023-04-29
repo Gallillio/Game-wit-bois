@@ -268,6 +268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPlayerMode: 1
+  switchModeSfxAudioSource: {fileID: 0}
+  switchSfx: {fileID: 0}
 --- !u!114 &39423787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9401,6 +9403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPlayerMode: 1
+  switchModeSfxAudioSource: {fileID: 706843324}
+  switchSfx: {fileID: 8300000, guid: 84e427d6b66ab4066b6a4dcd0ce819ee, type: 3}
 --- !u!114 &706843317
 MonoBehaviour:
   m_ObjectHideFlags: 0
