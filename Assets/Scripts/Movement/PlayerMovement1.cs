@@ -84,6 +84,14 @@ public class PlayerMovement1 : MonoBehaviour
 	[HideInInspector] public bool isOnEnemyAttackableCollider; //it is a border that surrounds the enemy a bit further making it easier for player to hit enemy
 	[HideInInspector] public bool giveDamageToPlayer;
 
+    #region PLAYER_SFX
+    [SerializeField] private AudioSource playerSfxAudioSource;
+    public AudioClip jumpSfx;
+    public AudioClip dashSfx;
+
+    #endregion
+    
+    
 	private void Awake()
 	{
 		RB = GetComponent<Rigidbody2D>();
@@ -121,7 +129,6 @@ public class PlayerMovement1 : MonoBehaviour
 
 		if (Input.GetButtonDown("Jump"))
 		{
-
 			OnJumpInput();
 		}
 
@@ -441,6 +448,7 @@ public class PlayerMovement1 : MonoBehaviour
     #region JUMP METHODS
     public void Jump()
     {
+
         //Ensures we can't call Jump multiple times from one press
         LastPressedJumpTime = 0;
         LastOnGroundTime = 0;
@@ -449,6 +457,12 @@ public class PlayerMovement1 : MonoBehaviour
         //We increase the force applied if we are falling
         //This means we'll always feel like we jump the same amount 
         //(setting the player's Y velocity to 0 beforehand will likely work the same, but I find this more elegant :D)
+
+        #region Jump Sound Effect
+        playerSfxAudioSource.clip = jumpSfx; //set the audio source clip with the jump sound effect
+        playerSfxAudioSource.Play(); //play sound
+        #endregion
+
         float force = Data.jumpForce;
         if (RB.velocity.y < 0)
             force -= RB.velocity.y;
@@ -459,6 +473,7 @@ public class PlayerMovement1 : MonoBehaviour
 
     private void WallJump(int dir)
     {
+
         //Ensures we can't call Wall Jump multiple times from one press
         LastPressedJumpTime = 0;
         LastOnGroundTime = 0;
@@ -466,6 +481,15 @@ public class PlayerMovement1 : MonoBehaviour
         LastOnWallLeftTime = 0;
 
         #region Perform Wall Jump
+
+        #region Wall Jump Sound Effect
+        playerSfxAudioSource.clip = jumpSfx; //set the audio source clip with the jump sound effect
+        playerSfxAudioSource.pitch += 2; //change pitch for variation
+        playerSfxAudioSource.Play(); //play sound
+        playerSfxAudioSource.pitch -= 2; //change back to original
+        #endregion
+
+        
         Vector2 force = new Vector2(Data.wallJumpForce.x, Data.wallJumpForce.y);
         force.x *= dir; //apply force in opposite direction of wall
 
@@ -486,9 +510,15 @@ public class PlayerMovement1 : MonoBehaviour
     ////Dash Coroutine
     private IEnumerator StartDash(Vector2 dir)
     {
+        #region Dash Sound Effect
+        playerSfxAudioSource.clip = dashSfx; //set the audio source clip with the jump sound effect
+        playerSfxAudioSource.pitch += 2; //change pitch for variation
+        playerSfxAudioSource.Play(); //play sound
+        playerSfxAudioSource.pitch -= 2; //change back to original
+        #endregion
+        
         //Overall this method of dashing aims to mimic Celeste, if you're looking for
         // a more physics-based approach try a method similar to that used in the jump
-
         LastOnGroundTime = 0;
         LastPressedDashTime = 0;
 
