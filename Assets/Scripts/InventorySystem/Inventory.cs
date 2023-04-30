@@ -61,7 +61,7 @@ namespace InventorySystem
             {
                 //item exists then increment stack size
                 item.AddToStack();
-                // print("total " + item.itemData.displayName + " " + item.stackSize);
+                print("total " + item.itemData.displayName + " " + item.stackSize);
                 OnInventoryChange?.Invoke(inventory);
             }
             else if (inventory.Count <= 9)
@@ -74,7 +74,7 @@ namespace InventorySystem
                 var newItem = new InventoryItem(itemData);
                 inventory.Add(newItem);
                 itemDictionary.Add(itemData, newItem);
-                // print("Added " + newItem.itemData.displayName + " " + newItem.stackSize + " for the first time");
+                print("Added " + newItem.itemData.displayName + " " + newItem.stackSize + " for the first time");
                 OnInventoryChange?.Invoke(inventory);
             }
         }
