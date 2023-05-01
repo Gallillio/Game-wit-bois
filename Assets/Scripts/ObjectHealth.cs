@@ -8,7 +8,9 @@ public class ObjectHealth : MonoBehaviour
     public bool giveUpwardForce = true; // can the player bounce on it
     [SerializeField] private float health; //how many hits before dying
     [SerializeField] private GameObject BloodEffect; //animation for after dying
-
+    [SerializeField] private AudioSource enemySfxAudioSource;
+    public List<AudioClip> DamageSfx;
+    
     void Start()
     {
 
@@ -30,5 +32,7 @@ public class ObjectHealth : MonoBehaviour
     {
         Destroy(Instantiate(BloodEffect, transform.position, Quaternion.identity), 1);
         health -= damage;
+        enemySfxAudioSource.clip = DamageSfx[Random.Range(0,DamageSfx.Count)]; //plays random sound from the list
+        enemySfxAudioSource.Play();
     }
 }

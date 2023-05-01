@@ -354,6 +354,7 @@ public class PlayerMelee : MonoBehaviour
         GetComponent<HealthBar>().playerHealth -= 1;
         Hearts -= 1;
         PlayerKnockbackFromHit();
+        // added player damaage sfx here
     }
 
     public void PlayerKnockbackFromHit()

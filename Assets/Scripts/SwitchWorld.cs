@@ -31,7 +31,7 @@ public class SwitchWorld : MonoBehaviour
             }
             else
             {
-                Debug.Log("Plyer is now in Pixel");
+                Debug.Log("Player is now in Pixel");
                 currentPlayerMode = Mode.PIXEL;
             }
 
