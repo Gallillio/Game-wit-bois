@@ -11,7 +11,8 @@ public class PlayerMelee : MonoBehaviour
     #region FILE REFERENCES
     private PlayerMovement1 PM;
     public PlayerData Data;
-    //private ObjectHealth objectHealth;
+    private ObjectHealth objectHealth;
+    private Rigidbody2D RB;
     #endregion
     #region SETTERS
     //CoolDownTime
@@ -36,6 +37,13 @@ public class PlayerMelee : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private float attackDistance;
 
+    [Header("Player Damaged Knockback")]
+    public float knockbackForce;
+    public float knockbackCounter;
+    public float knockbackTime;
+    public bool knockedFromRight;
+
+
     //float variables used
     private float groundedAttackRange;
     private float groundedAttackDistance;
@@ -57,15 +65,19 @@ public class PlayerMelee : MonoBehaviour
     #endregion
 
     [HideInInspector]public bool IsHitting;
+    
     public int Hearts = 4;
 
     private Collider2D[] enemiesToDamage;
 
     private void Start()
     {
+        Debug.Log(Time.deltaTime);
         damage *= 0.5f;
         PM = GetComponent<PlayerMovement1>();
-        //objectHealth = GetComponent<ObjectHealth>();
+        RB = GetComponent<Rigidbody2D>();
+        
+        objectHealth = GetComponent<ObjectHealth>();
 
         groundedAttackRange = attackRange;
         groundedAttackDistance = attackDistance;
@@ -80,8 +92,10 @@ public class PlayerMelee : MonoBehaviour
 
     private void Update()
     {
+        PlayerKnockbackFromHit();
         HandleMovement();
         HitDirection();
+        
         GetComponent<HealthBar>().playerHealth = Hearts;
 
         //Resets collision btw enemy and player
@@ -99,12 +113,13 @@ public class PlayerMelee : MonoBehaviour
 
             for (int i = 0; i < enemiesToDamage.Length; i++)
             {
+                //ggg
                 //if (objectHealth.damagable == true)
-                if (enemiesToDamage[i].GetComponent<ObjectHealth>().damagable == true)
+                    if (enemiesToDamage[i].GetComponent<ObjectHealth>().damagable == true)
                 {
-                    HandleCollision(enemiesToDamage[i].GetComponent<ObjectHealth>());
+                        HandleCollision(enemiesToDamage[i].GetComponent<ObjectHealth>());
 
-                }
+                    }
             }
         }
         else
@@ -144,6 +159,7 @@ public class PlayerMelee : MonoBehaviour
             }
         }
 
+        //ggg
         objHealth.DealDamage(damage);
         //Start Coroutine, turns off all bools related to melee attack collision and direction
         StartCoroutine(NoLongerColliding());
@@ -330,13 +346,35 @@ public class PlayerMelee : MonoBehaviour
 
             }
 
-
     }
 
+    //ggg
     public void PlayerDamaged()
     {
         GetComponent<HealthBar>().playerHealth -= 1;
         Hearts -= 1;
+        PlayerKnockbackFromHit();
+    }
+
+    public void PlayerKnockbackFromHit()
+    {
+        if (knockbackCounter <= 0)
+        {
+            
+        }
+        else
+        {
+            if (knockedFromRight)
+            {
+                RB.velocity = new Vector2(-knockbackForce*100, 0);
+            }
+            else
+            {
+                RB.velocity = new Vector2(knockbackForce*100, 0);
+            }
+
+            knockbackCounter -= Time.deltaTime;
+        }
     }
 
     private void OnDrawGizmosSelected()
