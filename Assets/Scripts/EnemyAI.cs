@@ -77,6 +77,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 lastHit = Time.time;
+                //ggg
                 collision.gameObject.GetComponent<PlayerMelee>().PlayerDamaged();
 
             }
