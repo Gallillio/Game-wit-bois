@@ -302,6 +302,9 @@ MonoBehaviour:
   canDownwardStrikeAttack: 1
   IsHitting: 0
   Hearts: 0
+  playerSfxAudioSource: {fileID: 0}
+  DamageSfx: []
+  slashSfx: []
 --- !u!114 &39423788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9441,6 +9444,12 @@ MonoBehaviour:
   canDownwardStrikeAttack: 1
   IsHitting: 0
   Hearts: 4
+  playerSfxAudioSource: {fileID: 706843324}
+  DamageSfx:
+  - {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
+  slashSfx:
+  - {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+  - {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
 --- !u!114 &706843318
 MonoBehaviour:
   m_ObjectHideFlags: 0
