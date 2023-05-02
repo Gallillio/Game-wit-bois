@@ -13,6 +13,7 @@ public class PlayerMelee : MonoBehaviour
     public PlayerData Data;
     private ObjectHealth objectHealth;
     private Rigidbody2D RB;
+    private AbilitiesWheel AW;
     #endregion
     #region SETTERS
     //CoolDownTime
@@ -36,6 +37,7 @@ public class PlayerMelee : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float attackRange;
     [SerializeField] private float attackDistance;
+    [SerializeField] private bool disableAbilityCooldown;
 
     [Header("Player Damaged Knockback")]
     public float knockbackForce;
@@ -65,15 +67,17 @@ public class PlayerMelee : MonoBehaviour
     #endregion
 
     [HideInInspector]public bool IsHitting;
-    
+    [HideInInspector] private int dashHitDuration = 0;
+
     public int Hearts = 4;
+    
 
     private Collider2D[] enemiesToDamage;
 
     private void Start()
     {
-        Debug.Log(Time.deltaTime);
         damage *= 0.5f;
+        AW = GetComponent<AbilitiesWheel>();
         PM = GetComponent<PlayerMovement1>();
         RB = GetComponent<Rigidbody2D>();
         
@@ -92,7 +96,6 @@ public class PlayerMelee : MonoBehaviour
 
     private void Update()
     {
-        PlayerKnockbackFromHit();
         HandleMovement();
         HitDirection();
         
@@ -314,21 +317,37 @@ public class PlayerMelee : MonoBehaviour
 
     private void DashHit()
     {
-        if (Time.time - LastDash < DashAttackStrength)
+        //Check if desired ability is chosen & cooldown time finished
+        if (AW.abilitiesChoice == 0 && AW.cooldownDuration == 0 || disableAbilityCooldown)
         {
-        }
-        else
-        {
-            LastDash = Time.time;
-            //disable collision btw enemy and player to go through each other
-            Physics2D.IgnoreLayerCollision(3, 7, true);
-
-            //finds enemies within range and adds them to an array
-            Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
-
-            for (int i = 0; i < enemiesToDamage.Length; i++)
+            if (Time.time - LastDash < DashAttackStrength)
             {
-                enemiesToDamage[i].GetComponent<ObjectHealth>().DealDamage(damage);
+            }
+            else
+            {
+                LastDash = Time.time;
+                //disable collision btw enemy and player to go through each other
+                Physics2D.IgnoreLayerCollision(3, 7, true);
+
+                //finds enemies within range and adds them to an array
+                Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
+
+                for (int i = 0; i < enemiesToDamage.Length; i++)
+                {
+                    enemiesToDamage[i].GetComponent<ObjectHealth>().DealDamage(damage);
+                }
+                //Bug fix: this part replays 7 times per dash for some reason sooo
+                if(dashHitDuration == 7 && !disableAbilityCooldown)
+                {
+                    //start cooldown timer
+                    AW.cooldownDuration = 12;
+                    AW.BeginWheelCountdown(AW.cooldownDuration);
+                    dashHitDuration = 0;
+                }
+                else
+                {
+                    dashHitDuration++;
+                }
             }
         }
         
@@ -348,7 +367,7 @@ public class PlayerMelee : MonoBehaviour
 
     }
 
-    //ggg
+
     public void PlayerDamaged()
     {
         GetComponent<HealthBar>().playerHealth -= 1;
