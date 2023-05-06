@@ -73,7 +73,12 @@ public class PlayerMelee : MonoBehaviour
     
 
     private Collider2D[] enemiesToDamage;
+    
+    [SerializeField] private AudioSource playerSfxAudioSource;
+    public List<AudioClip> DamageSfx;
+    public List<AudioClip> slashSfx;
 
+    
     private void Start()
     {
         damage *= 0.5f;
@@ -113,7 +118,8 @@ public class PlayerMelee : MonoBehaviour
         {
             IsHitting = true;
             enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
-
+            playerSfxAudioSource.clip = slashSfx[Random.Range(0,slashSfx.Count)]; //plays random sound from the list
+            playerSfxAudioSource.Play();
             for (int i = 0; i < enemiesToDamage.Length; i++)
             {
                 //ggg
@@ -373,6 +379,8 @@ public class PlayerMelee : MonoBehaviour
         GetComponent<HealthBar>().playerHealth -= 1;
         Hearts -= 1;
         PlayerKnockbackFromHit();
+        playerSfxAudioSource.clip = DamageSfx[Random.Range(0,DamageSfx.Count)]; //plays random sound from the list
+        playerSfxAudioSource.Play();
     }
 
     public void PlayerKnockbackFromHit()
